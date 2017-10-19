@@ -5,6 +5,7 @@
 #include "ListaSequencial.h"
 #include "ListaEncadeada.h"
 #include "Organizacao.h"
+#include "OrganizacaoEncad.h"
 
 int numItera = 4;
 int numCopias = 0;

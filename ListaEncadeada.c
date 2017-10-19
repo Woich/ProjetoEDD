@@ -5,6 +5,8 @@
 #include "ListaSequencial.h"
 #include "ListaEncadeada.h"
 #include "Organizacao.h"
+#include "OrganizacaoEncad.h"
+#include "Teste.h"
 
 
 void preencheLista(ListaHeader *lista){
@@ -471,13 +473,15 @@ void salvaEncad(ListaHeader *lista){
 void mainListaEncadeada(){
 
     ListaHeader lista;
+    ListaEncad *vetor = malloc(sizeof(ListaEncad));
     int opcAcao = 0;
 
     lista.primeiro = NULL;
     lista.ultimo = NULL;
     lista.qtdElementos = 0;
 
-    preencheLista(&lista);
+    //preencheLista(&lista);
+    preencheVetorPonteiros(&lista, vetor);
 
     while(opcAcao != -1){
         numItera++;
@@ -542,7 +546,7 @@ void mainListaEncadeada(){
                     numItera++;
                     break;
 
-            case 11:mainOrganizacao(&lista);
+            case 11:mainOrgEncad(&lista);
                     numItera++;
                     break;
 

@@ -5,6 +5,7 @@
 #include "ListaSequencial.h"
 #include "ListaEncadeada.h"
 #include "Organizacao.h"
+#include "OrganizacaoEncad.h"
 
 void addFinal(ListaPessoa *lisOper, int fim){
     numCopias++;/*Contador somado para cada cópia feita na função*/
@@ -72,7 +73,7 @@ void addMeio(ListaPessoa *lisOper, int fim){
 void addIni(ListaPessoa *lisOper, int fim){
     numCopias++;/*Contador somado para cada cópia feita na função*/
 
-    int  cont, j;
+    int  cont;
     char nomeNovo[30];
     ContTempo temFuncao;
 
@@ -109,7 +110,6 @@ void removeItem(ListaPessoa *lisOper, int fim){
     numCopias++;/*Contador somado para cada cópia feita na função*/
 
     int posiRem, cont;
-    char nomeNovo[30];
     ContTempo temFuncao;
 
     temFuncao.temIni = time(NULL);
@@ -200,7 +200,7 @@ void salvaLista(ListaPessoa *pessoas, int arquivo, int tamList){
     numCopias++;
 
     int j;
-    FILE *file = fopen("NomeRG1K.txt", "w");
+    FILE *file = fopen("NomeRG10.txt", "w");
     ContTempo temFuncao;
 
     temFuncao.temIni = time(NULL);
@@ -221,11 +221,11 @@ void mainSequencial(){
 
     int opcFun=0, j, numEle=0;
 
-    char *split, *linTemp, linIni[30], *nomeArq;
+    char *split, *linTemp, linIni[30];
 
     const char delimit[]=" .,;:";
 
-    FILE *file = fopen("NomeRG1K.txt", "r");
+    FILE *file = fopen("NomeRG10.txt", "r");
 
     unsigned long int opcArq=0, i=0;
 
