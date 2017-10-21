@@ -1,10 +1,6 @@
 #ifndef LISTASEQUENCIAL
 #define LISTASEQUENCIAL
 
-#ifndef MAX
-#define MAX          50000
-#endif // MAX
-
 typedef struct listapessoa{
     char nome[30];
     int rg;

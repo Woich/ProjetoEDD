@@ -219,7 +219,7 @@ void salvaLista(ListaPessoa *pessoas, int arquivo, int tamList){
 
 void mainSequencial(){
 
-    int opcFun=0, j, numEle=0;
+    int opcArq=0, opcFun=0, j, numEle=0;
 
     char *split, *linTemp, linIni[30];
 
@@ -227,9 +227,43 @@ void mainSequencial(){
 
     FILE *file = fopen("NomeRG1M.txt", "r");
 
-    unsigned long int opcArq=0, i=0;
+    unsigned long int i=0;
 
-    ListaPessoa lista[MAX];
+    ListaPessoa **lista;
+
+    printf("Qual arquivo deve ser lido?\n"
+           "(1)10 registros\n"
+           "(2)50 registros\n"
+           "(3)100 registros\n"
+           "(4)1K registros\n"
+           "(5)10K registros\n"
+           "(6)1M registros\n"
+           "(7)10M registros\n");
+    scanf("%d", &opcArq);
+
+    switch(opcArq){
+        case 1: file = fopen("NomeRG10.txt", "r");
+                lista =malloc(10 * sizeof(lista));
+                break;
+        case 2: file = fopen("NomeRG50.txt", "r");
+                lista =malloc(50 * sizeof(lista));
+                break;
+        case 3: file = fopen("NomeRG100.txt", "r");
+                lista =malloc(100 * sizeof(lista));
+                break;
+        case 4: file = fopen("NomeRG1K.txt", "r");
+                lista =malloc(1000 * sizeof(lista));
+                break;
+        case 5: file = fopen("NomeRG10K.txt", "r");
+                lista =malloc(10000 * sizeof(lista));
+                break;
+        case 6: file = fopen("NomeRG1M.txt", "r");
+                lista =malloc(1000000 * sizeof(lista));
+                break;
+        case 7: file = fopen("NomeRG100M.txt", "r");
+                lista =malloc(11748444 * sizeof(lista));
+                break;
+    }
 
     fgets(linIni, 30, file);
     numCopias++;
