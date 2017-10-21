@@ -653,7 +653,8 @@ void mainListaEncadeada(){
     ListaHeader lista;
     ListaEncad **vetor;
     int opcAcao = 0, i, opcArq, opcSort;
-    long int numRegistros;
+    long int numRegistros, numElementos;
+    ContTempo temFuncao;
 
     lista.primeiro = NULL;
     lista.ultimo = NULL;
@@ -741,7 +742,7 @@ void mainListaEncadeada(){
                     numItera++;
                     break;
 
-            case 8: printf("\nQuantidade de Elementos:%i\n\n", lista.qtdElementos);
+            case 8: printf("\nQuantidade de Elementos:%d\n\n", lista.qtdElementos);
                     numItera++;
                     break;
 
@@ -757,7 +758,8 @@ void mainListaEncadeada(){
                     printf("Qual metodo de organizacao?\n"
                            "(1)Selection Sort\n"
                            "(2)Bubble Sort\n"
-                           "(3)Insertion Sort\n");
+                           "(3)Insertion Sort\n"
+                           "(4)Quick Sort\n");
                     scanf("%d", &opcSort);
 
                     switch(opcSort){
@@ -768,6 +770,16 @@ void mainListaEncadeada(){
                                break;
 
                         case 3:insertionSortEncad(&lista, vetor);
+                               break;
+
+                        case 4:numCopias=0; numItera=0;
+                               //temFuncao->temIni = time(NULL);
+                               numElementos = lista.qtdElementos;
+                               quickSortEncad(&lista, vetor, 0, numElementos);
+                               //temFuncao->temFinal = time(NULL);
+                               //temFuncao->tempo = difftime(temFuncao.temFinal, temFuncao.temIni);
+                               //printf("\n Tempo da Funcao: %f segundos\n Numero Iteracoes:%d\n Numero Copias:%d", temFuncao.tempo, numItera, numCopias);
+                               //printf("\n\n");
                                break;
                     }
                     break;

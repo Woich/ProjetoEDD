@@ -241,6 +241,51 @@ void insertionSortEncad(ListaHeader *lista, ListaEncad **vetorPont){
     printf("\n Tempo da Funcao: %f segundos\n Numero Iteracoes:%d\n Numero Copias:%d", temFuncao.tempo, numItera, numCopias);
     printf("\n\n");
 }
-void quickSortEncad(ListaHeader *lista, ListaEncad **vetorPont){
+void quickSortEncad(ListaHeader *lista, ListaEncad **vetorPont, long int iniComp, long int fimComp){//Esse possui inicio e fim do vetor para limitadores
+    long int i=0, j=1, pivo;//'i' e 'j' são controladores de loops, enquanto o pivo é uma medida para a organização
+    ListaEncad *pontAux;//Ponteiro Auxiliar
 
+    pivo = (lista->primeiro->rg + lista->ultimo->rg)/2;
+
+    while(i < j){
+
+        //Rodando o i
+        for(i=iniComp ; i<fimComp ; i++){
+
+            if(vetorPont[i]->rg > pivo){
+                break;
+            }
+        }
+        //Rodando o j
+        for(j=fimComp ; j>iniComp ; j--){
+
+            if(vetorPont[j]->rg < pivo){
+                break;
+            }
+
+        }
+
+        numItera++;
+
+        //Atribui valor para o auxiliar
+        pontAux = vetorPont[i];
+        numCopias++;
+
+        //Troca valor de vetorPont[i]
+        vetorPont[i] = vetorPont[j];
+        numCopias++;
+
+        //troca valor de vetorPont[j]
+        vetorPont[j] = pontAux;
+        numCopias++;
+
+    }
+    //Secção baseada no 'j'
+    if(j > iniComp){
+        quickSortEncad(lista, vetorPont, iniComp, j);
+    }
+    //Secção baseada no 'i'
+    if(i< fimComp){
+        quickSortEncad(lista, vetorPont, i, fimComp);
+    }
 }
