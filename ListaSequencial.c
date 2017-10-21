@@ -200,7 +200,7 @@ void salvaLista(ListaPessoa *pessoas, int arquivo, int tamList){
     numCopias++;
 
     int j;
-    FILE *file = fopen("NomeRG10.txt", "w");
+    FILE *file = fopen("NomeRG1M.txt", "w");
     ContTempo temFuncao;
 
     temFuncao.temIni = time(NULL);
@@ -225,7 +225,7 @@ void mainSequencial(){
 
     const char delimit[]=" .,;:";
 
-    FILE *file = fopen("NomeRG10.txt", "r");
+    FILE *file = fopen("NomeRG1M.txt", "r");
 
     unsigned long int opcArq=0, i=0;
 

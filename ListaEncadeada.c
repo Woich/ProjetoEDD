@@ -755,7 +755,7 @@ void mainListaEncadeada(){
 
             case 11:numItera++;
                     printf("Qual metodo de organizacao?\n"
-                           "(1)Selection Sort");
+                           "(1)Selection Sort\n");
                     scanf("%d", &opcSort);
 
                     switch(opcSort){
