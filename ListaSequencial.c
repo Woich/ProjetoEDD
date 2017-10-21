@@ -229,7 +229,7 @@ void mainSequencial(){
 
     unsigned long int i=0;
 
-    ListaPessoa **lista;
+    ListaPessoa *lista;
 
     printf("Qual arquivo deve ser lido?\n"
            "(1)10 registros\n"
