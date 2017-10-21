@@ -157,7 +157,7 @@ void preencheLista(ListaHeader *listaGerada, ListaEncad **vetorPonteiros, int op
 
 }
 
-void imprimeEncad(ListaHeader *lista){
+void imprimeEncad(ListaHeader *lista, ListaEncad **vetorPonteiros){
 
     ContTempo temFuncao;
 
@@ -169,13 +169,18 @@ void imprimeEncad(ListaHeader *lista){
 
     imprimir = lista->primeiro;
 
-    for(i=0 ; i<lista->qtdElementos ; i++){
+    /*for(i=0 ; i<lista->qtdElementos ; i++){
         numItera++;
 
-        /*Imprime registro em questão*/
-        printf("%i: %s,%i \n", i+1, imprimir->nome, imprimir->rg);
-        /*Altera o registro para o próximo*/
+        //Imprime registro em questão
+        printf("%d: %s,%d \n", i+1, imprimir->nome, imprimir->rg);
+        //Altera o registro para o próximo
         imprimir = imprimir->proximo;
+    }*/
+
+    for(i=0 ; i<lista->qtdElementos ; i++){
+        /*Imprime registro em questão*/
+        printf("%d: %s,%d \n", i+1, vetorPonteiros[i]->nome, vetorPonteiros[i]->rg);
     }
 
     temFuncao.temFinal = time(NULL);
@@ -501,13 +506,17 @@ void removeEncad(ListaHeader *lista, ListaEncad **vetorPonteiros){
 
         /*encontra a referencia e atribui para as variaveir*/
         registro = lista->primeiro;
+        numCopias++;
+
         auxProximo = registro->proximo;
+        numCopias++;
 
         /*Altera referencia do próximo*/
         auxProximo->anterior = NULL;
 
         /*Altera referencia do primeiro item*/
         lista->primeiro = auxProximo;
+        numCopias++;
 
         //Altera o vetor para que ele fique correto
         for(i=0 ; i<lista->qtdElementos ; i++){
@@ -515,6 +524,8 @@ void removeEncad(ListaHeader *lista, ListaEncad **vetorPonteiros){
             if(vetorPonteiros[i]->rg != lista->ultimo->rg){
 
                 vetorPonteiros[i] = vetorPonteiros[i+1];
+                numCopias++;
+                numItera++;
             }
 
         }
@@ -528,16 +539,21 @@ void removeEncad(ListaHeader *lista, ListaEncad **vetorPonteiros){
         numItera++;
 
         registro = lista->ultimo;
+        numCopias++;
+
         auxAnterior = registro->anterior;
+        numCopias++;
 
         /*Altera referencia do próximo*/
         auxAnterior->proximo = NULL;
 
         /*Altera referencia do primeiro item*/
         lista->ultimo = auxAnterior;
+        numCopias++;
 
         /*Libera memoria*/
         free(registro);
+        vetorPonteiros = realloc(vetorPonteiros, sizeof(ListaEncad) * (lista->qtdElementos-1));
     }
     else{
         numItera++;
@@ -545,18 +561,39 @@ void removeEncad(ListaHeader *lista, ListaEncad **vetorPonteiros){
          numItera++;
             /*Corre a lista para encontrar a posição a ser adicionada*/
             registro = registro->proximo;
+            numCopias++;
         }
 
         /*Pega as referencias dos elementos que estão em torno do que será removido*/
         auxAnterior = registro->anterior;
+        numCopias++;
+
         auxProximo = registro->proximo;
+        numCopias++;
 
         /*Arruma as referencias da lista*/
         auxAnterior->proximo = auxProximo;
+        numCopias++;
+
         auxProximo->anterior = auxAnterior;
+        numCopias++;
+
+        //Altera o vetor para que ele fique correto
+        for(i=posicao-1 ; i<lista->qtdElementos ; i++){
+            numItera++;
+
+            if(vetorPonteiros[i]->rg != lista->ultimo->rg){
+
+                vetorPonteiros[i] = vetorPonteiros[i+1];
+                numCopias++;
+                numItera++;
+            }
+
+        }
 
         /*Libera a memória em uso*/
         free(registro);
+        vetorPonteiros = realloc(vetorPonteiros, sizeof(ListaEncad) * (lista->qtdElementos-1));
 
 
     }
@@ -581,6 +618,9 @@ void salvaEncad(ListaHeader *lista){
     /*Arquivo*/
     FILE *file = fopen("NomeRG10.txt", "w");
 
+    numCopias = 0;
+    numItera = 0;
+
     /*Valores a serem Salvos*/
     ListaEncad *imprimir;
 
@@ -593,16 +633,18 @@ void salvaEncad(ListaHeader *lista){
         numItera++;
 
         /*Imprime registro em questão*/
-        fprintf(file,"%s,%i \n", imprimir->nome, imprimir->rg);
+        fprintf(file,"%s,%d\n", imprimir->nome, imprimir->rg);
         /*Altera o registro para o próximo*/
         imprimir = imprimir->proximo;
+        numCopias++;
     }
 
     fclose(file);
 
     temFuncao.temFinal = time(NULL);
     temFuncao.tempo = difftime(temFuncao.temFinal, temFuncao.temIni);
-    printf("\n Tempo da Funcao: %f segundos\n\n", temFuncao.tempo);
+    printf("\n Tempo da Funcao: %f segundos\n Numero Iteracoes:%d\n Numero Copias:%d", temFuncao.tempo, numItera, numCopias);
+    printf("\n\n");
 
 }
 
@@ -671,7 +713,7 @@ void mainListaEncadeada(){
 
         switch(opcAcao){
             case 1: printf("\n\n");
-                    imprimeEncad(&lista);
+                    imprimeEncad(&lista, vetor);
                     numItera++;
                     break;
 

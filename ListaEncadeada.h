@@ -24,7 +24,7 @@ typedef struct clock{
 int numItera, numCopias;
 
 void preencheLista(ListaHeader *listaGerada, ListaEncad **vetorPonteiros, int opcArq);
-void imprimeEncad(ListaHeader *lista);
+void imprimeEncad(ListaHeader *lista, ListaEncad **vetorPonteiros);
 void addFinalEncad(ListaHeader *lista, ListaEncad **vetorPonteiros);
 void addMeioEncad(ListaHeader *lista, ListaEncad **vetorPonteiros);
 void addInicioEncad(ListaHeader *lista, ListaEncad **vetorPonteiros);
