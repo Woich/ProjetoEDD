@@ -242,27 +242,22 @@ void insertionSortEncad(ListaHeader *lista, ListaEncad **vetorPont){
     printf("\n\n");
 }
 void quickSortEncad(ListaHeader *lista, ListaEncad **vetorPont, long int iniComp, long int fimComp){//Esse possui inicio e fim do vetor para limitadores
-    long int i=0, j=1, pivo;//'i' e 'j' são controladores de loops, enquanto o pivo é uma medida para a organização
+    long int i=iniComp, j=fimComp, pivo;//'i' e 'j' são controladores de loops, enquanto o pivo é uma medida para a organização
     ListaEncad *pontAux;//Ponteiro Auxiliar
 
-    pivo = (lista->primeiro->rg + lista->ultimo->rg)/2;
+    pivo = (vetorPont[i]->rg + vetorPont[j-1]->rg)/2;
 
     while(i < j){
 
         //Rodando o i
-        for(i=iniComp ; i<fimComp ; i++){
-
-            if(vetorPont[i]->rg > pivo){
-                break;
-            }
+        while(vetorPont[i]->rg < pivo){
+            i++;
+            numItera++;
         }
         //Rodando o j
-        for(j=fimComp ; j>iniComp ; j--){
-
-            if(vetorPont[j]->rg < pivo){
-                break;
-            }
-
+        while(vetorPont[j-1]->rg > pivo){
+            j--;
+            numItera++;
         }
 
         numItera++;
@@ -272,11 +267,11 @@ void quickSortEncad(ListaHeader *lista, ListaEncad **vetorPont, long int iniComp
         numCopias++;
 
         //Troca valor de vetorPont[i]
-        vetorPont[i] = vetorPont[j];
+        vetorPont[i] = vetorPont[j-1];
         numCopias++;
 
         //troca valor de vetorPont[j]
-        vetorPont[j] = pontAux;
+        vetorPont[j-1] = pontAux;
         numCopias++;
 
     }
