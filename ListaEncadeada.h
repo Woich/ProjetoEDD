@@ -12,7 +12,7 @@ typedef struct encad{
 typedef struct head{
     struct encad *primeiro,
                  *ultimo;
-    int qtdElementos;
+    long int qtdElementos;
 }ListaHeader;
 
 typedef struct clock{
@@ -25,9 +25,9 @@ int numItera, numCopias;
 
 void preencheLista(ListaHeader *listaGerada, ListaEncad **vetorPonteiros, int opcArq);
 void imprimeEncad(ListaHeader *lista);
-void addFinalEncad(ListaHeader *lista);
-void addMeioEncad(ListaHeader *lista);
-void addInicioEncad(ListaHeader *lista);
+void addFinalEncad(ListaHeader *lista, ListaEncad **vetorPonteiros);
+void addMeioEncad(ListaHeader *lista, ListaEncad **vetorPonteiros);
+void addInicioEncad(ListaHeader *lista, ListaEncad **vetorPonteiros);
 void pesquisaEncad(ListaHeader *lista);
 void removeEncad(ListaHeader *lista);
 void salvaEncad(ListaHeader *lista);
