@@ -241,6 +241,7 @@ void insertionSortEncad(ListaHeader *lista, ListaEncad **vetorPont){
     printf("\n Tempo da Funcao: %f segundos\n Numero Iteracoes:%d\n Numero Copias:%d", temFuncao.tempo, numItera, numCopias);
     printf("\n\n");
 }
+
 void quickSortEncad(ListaHeader *lista, ListaEncad **vetorPont, long int iniComp, long int fimComp){//Esse possui inicio e fim do vetor para limitadores
     long int i=iniComp, j=fimComp, pivo;//'i' e 'j' são controladores de loops, enquanto o pivo é uma medida para a organização
     ListaEncad *pontAux;//Ponteiro Auxiliar
