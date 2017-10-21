@@ -261,20 +261,21 @@ void quickSortEncad(ListaHeader *lista, ListaEncad **vetorPont, long int iniComp
                 j--;
                 numItera++;
             }
+            if(i<=j){
+                numItera++;
 
-            numItera++;
+                //Atribui valor para o auxiliar
+                pontAux = vetorPont[i];
+                numCopias++;
 
-            //Atribui valor para o auxiliar
-            pontAux = vetorPont[i];
-            numCopias++;
+                //Troca valor de vetorPont[i]
+                vetorPont[i] = vetorPont[j-1];
+                numCopias++;
 
-            //Troca valor de vetorPont[i]
-            vetorPont[i] = vetorPont[j-1];
-            numCopias++;
-
-            //troca valor de vetorPont[j]
-            vetorPont[j-1] = pontAux;
-            numCopias++;
+                //troca valor de vetorPont[j]
+                vetorPont[j-1] = pontAux;
+                numCopias++;
+            }
 
         }
         //Secção baseada no 'j'
