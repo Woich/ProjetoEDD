@@ -372,19 +372,26 @@ void pesquisaEncad(ListaHeader *lista){
             scanf("%d", &posicao);
             getchar();
 
-            for(i=1 ; i<posicao ; i++){
-                numItera++;
-                /*Corre a lista para encontrar o item desejado*/
-                registro = registro->proximo;
-                numCopias++;
+            if(posicao < 1 || posicao > lista->qtdElementos){
+                printf("\n Posicao Invalida\n\n");
             }
 
-            printf("\nPosicao:%i\n"
-                       "Nome:%s\n"
-                       "RG:%i\n", i, registro->nome, registro->rg);
+            else{
+                for(i=1 ; i<posicao ; i++){
+                    numItera++;
+                    /*Corre a lista para encontrar o item desejado*/
+                    registro = registro->proximo;
+                    numCopias++;
+                }
 
-            /*Altera o valor para quebrar o loop while*/
-            opcBusca = 0;
+                printf("\nPosicao:%i\n"
+                           "Nome:%s\n"
+                           "RG:%i\n", i, registro->nome, registro->rg);
+
+                /*Altera o valor para quebrar o loop while*/
+                opcBusca = 0;
+
+            }
         }
         /*----------------- RG --------------------*/
         else if(opcBusca == 2){
@@ -397,8 +404,22 @@ void pesquisaEncad(ListaHeader *lista){
             for(i=1 ; i<=lista->qtdElementos; i++){
                 numItera++;
 
+                if(lista->ultimo->rg == registro->rg && registro->rg != rg){
+                    numItera++;
+                    printf("\nO RG(%d) nao foi cadastrado\n\n", rg);
+                    break;
+                }
+
                 if(registro->rg == rg){
                     numItera++;
+
+                    printf("\nPosicao:%i\n"
+                           "Nome:%s\n"
+                           "RG:%i\n", i, registro->nome, registro->rg);
+
+                    /*Altera o valor para quebrar o loop while*/
+                    opcBusca = 0;
+
                     /*Caso seja igual, sai do loop for*/
                     break;
                 }
@@ -409,14 +430,6 @@ void pesquisaEncad(ListaHeader *lista){
                     numCopias++;
                 }
             }
-
-            printf("\nPosicao:%i\n"
-                       "Nome:%s\n"
-                       "RG:%i\n", i, registro->nome, registro->rg);
-
-            /*Altera o valor para quebrar o loop while*/
-            opcBusca = 0;
-
         }
 
     }
@@ -424,7 +437,7 @@ void pesquisaEncad(ListaHeader *lista){
 
     temFuncao.temFinal = time(NULL);
     temFuncao.tempo = difftime(temFuncao.temFinal, temFuncao.temIni);
-    printf("\n Tempo da Funcao: %f segundos", temFuncao.tempo);
+    printf("\n Tempo da Funcao: %f segundos\n Numero Iteracoes:%d\n Numero Copias:%d", temFuncao.tempo, numItera, numCopias);
     printf("\n\n");
 
 }
