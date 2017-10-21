@@ -756,7 +756,8 @@ void mainListaEncadeada(){
             case 11:numItera++;
                     printf("Qual metodo de organizacao?\n"
                            "(1)Selection Sort\n"
-                           "(2)Bubble Sort\n");
+                           "(2)Bubble Sort\n"
+                           "(3)Insertion Sort\n");
                     scanf("%d", &opcSort);
 
                     switch(opcSort){
@@ -764,6 +765,9 @@ void mainListaEncadeada(){
                                break;
 
                         case 2:bubbleSortEncad(&lista, vetor);
+                               break;
+
+                        case 3:insertionSortEncad(&lista, vetor);
                                break;
                     }
                     break;

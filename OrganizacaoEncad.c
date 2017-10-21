@@ -92,13 +92,19 @@ void selecSortEncad(ListaHeader *lista, ListaEncad **vetorPont){
 
 void bubbleSortEncad(ListaHeader *lista, ListaEncad **vetorPont){
 
-    long int i, numAcoes = 1;
-    ListaEncad *pontAux;
+    long int i, numAcoes = 1;// Controladores para o loops
+    ListaEncad *pontAux;//Ponteiro Auxiliar
+    ContTempo temFuncao;//Função
+
+    temFuncao.temIni = time(NULL);
+    numCopias=0;
+    numItera=0;
 
     while(numAcoes != 0){
         numAcoes = 0;
 
         for(i=0; i<lista->qtdElementos ; i++){
+            numItera++;
 
             if(i!=lista->qtdElementos-1 && vetorPont[i]->rg > vetorPont[i+1]->rg){
                 numItera++;
@@ -157,4 +163,21 @@ void bubbleSortEncad(ListaHeader *lista, ListaEncad **vetorPont){
         }
     }
 
+    temFuncao.temFinal = time(NULL);
+    temFuncao.tempo = difftime(temFuncao.temFinal, temFuncao.temIni);
+    printf("\n Tempo da Funcao: %f segundos\n Numero Iteracoes:%d\n Numero Copias:%d", temFuncao.tempo, numItera, numCopias);
+    printf("\n\n");
+
+}
+
+void insertionSortEncad(ListaHeader *lista, ListaEncad **vetorPont){
+    long int i, j;//Controladores de loops
+
+    ListaEncad *pontAux;//Ponteiro Auxiliar
+
+    for(i=2 ; i<lista->qtdElementos ; i++){//'i' é o que secsiona os pedaços que serão avaliados
+        for(j=0 ; j<i ; j++){//'j' é quem corre o vetor sendo limitado por 'i'
+            if(vetorPont[i]->rg < vetorPont[j]->rg)
+        }
+    }
 }
