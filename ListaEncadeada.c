@@ -18,6 +18,10 @@ void preencheLista(ListaHeader *listaGerada, ListaEncad **vetorPonteiros, int op
     ListaEncad *registro;
     long int i, numRegistros;
 
+    temFuncao.temIni = time(NULL);
+    numCopias = 0;
+    numItera = 0;
+
     switch(opcArq){
         case 1: file = fopen("NomeRG10.txt", "r");
                 numRegistros = 10;
@@ -117,7 +121,8 @@ void preencheLista(ListaHeader *listaGerada, ListaEncad **vetorPonteiros, int op
     fclose(file);
     temFuncao.temFinal = time(NULL);
     temFuncao.tempo = difftime(temFuncao.temFinal, temFuncao.temIni);
-    printf("\n Tempo da Funcao: %f segundos\n\n", temFuncao.tempo);
+    printf("\n Tempo da Funcao: %f segundos\n Numero Iteracoes:%d\n Numero Copias:%d", temFuncao.tempo, numItera, numCopias);
+    printf("\n\n");
 
 
 }
@@ -145,7 +150,8 @@ void imprimeEncad(ListaHeader *lista){
 
     temFuncao.temFinal = time(NULL);
     temFuncao.tempo = difftime(temFuncao.temFinal, temFuncao.temIni);
-    printf("\n Tempo da Funcao: %f segundos\n\nNumero de Iterações:%d", temFuncao.tempo, i);
+    printf("\n Tempo da Funcao: %f segundos\n Numero Iteracoes:%d\n Numero Copias:%d", temFuncao.tempo, numItera, numCopias);
+    printf("\n\n");
 
 }
 
@@ -201,7 +207,6 @@ void addFinalEncad(ListaHeader *lista, ListaEncad **vetorPonteiros){
     temFuncao.temFinal = time(NULL);
     temFuncao.tempo = difftime(temFuncao.temFinal, temFuncao.temIni);
     printf("\n Tempo da Funcao: %f segundos\n Numero Iteracoes:%d\n Numero Copias:%d", temFuncao.tempo, numItera, numCopias);
-
     printf("\n\n");
 }
 
