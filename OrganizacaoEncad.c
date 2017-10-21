@@ -94,7 +94,7 @@ void bubbleSortEncad(ListaHeader *lista, ListaEncad **vetorPont){
 
     long int i, numAcoes = 1;// Controladores para o loops
     ListaEncad *pontAux;//Ponteiro Auxiliar
-    ContTempo temFuncao;//Função
+    ContTempo temFuncao;//Tempo da Função
 
     temFuncao.temIni = time(NULL);
     numCopias=0;
@@ -172,12 +172,75 @@ void bubbleSortEncad(ListaHeader *lista, ListaEncad **vetorPont){
 
 void insertionSortEncad(ListaHeader *lista, ListaEncad **vetorPont){
     long int i, j;//Controladores de loops
-
+    ContTempo temFuncao;//Tempo da Função
     ListaEncad *pontAux;//Ponteiro Auxiliar
+
+    temFuncao.temIni = time(NULL);
+    numCopias=0;
+    numItera=0;
 
     for(i=2 ; i<lista->qtdElementos ; i++){//'i' é o que secsiona os pedaços que serão avaliados
         for(j=0 ; j<i ; j++){//'j' é quem corre o vetor sendo limitado por 'i'
-            if(vetorPont[i]->rg < vetorPont[j]->rg)
+            if(vetorPont[i]->rg < vetorPont[j]->rg){
+                numItera++;
+
+                //Atribui valor para o auxiliar
+                pontAux = vetorPont[i];
+                numCopias++;
+
+                //Troca valor de vetorPont[i]
+                vetorPont[i] = vetorPont[j];
+                numCopias++;
+
+                //troca valor de vetorPont[j]
+                vetorPont[j] = pontAux;
+                numCopias++;
+            }
         }
     }
+
+    //Esse for serve para arrumas todas as referencias de todos os pontos do vetor
+    for(i=0 ; i<lista->qtdElementos ; i++){
+        numItera++;
+        if(i == 0){
+            numItera++;
+            //Muda o primeiro elemento da lista
+            lista->primeiro = vetorPont[i];
+            numCopias++;
+
+            vetorPont[i]->anterior = 0;
+
+            vetorPont[i]->proximo = vetorPont[i+1];
+            numCopias++;
+        }
+        else if(i == lista->qtdElementos){
+            numItera++;
+            //Muda o ultimo elemento da lista
+            lista->ultimo = vetorPont[i];
+            numCopias++;
+
+            vetorPont[i]->proximo = 0;
+
+            vetorPont[i]->anterior = vetorPont[i-1];
+            numCopias++;
+        }
+        else{
+            numItera++;
+            //Altera os elemento do meio
+            vetorPont[i]->anterior = vetorPont[i-1];
+            numCopias++;
+
+            vetorPont[i]->proximo = vetorPont[i+1];
+            numCopias++;
+
+        }
+    }
+
+    temFuncao.temFinal = time(NULL);
+    temFuncao.tempo = difftime(temFuncao.temFinal, temFuncao.temIni);
+    printf("\n Tempo da Funcao: %f segundos\n Numero Iteracoes:%d\n Numero Copias:%d", temFuncao.tempo, numItera, numCopias);
+    printf("\n\n");
+}
+void quickSortEncad(ListaHeader *lista, ListaEncad **vetorPont){
+
 }
