@@ -477,9 +477,10 @@ void pesquisaEncad(ListaHeader *lista){
 
 }
 
-void removeEncad(ListaHeader *lista){
+void removeEncad(ListaHeader *lista, ListaEncad **vetorPonteiros){
 
-    int posicao, i;
+    int posicao;
+    long int i;
 
     ListaEncad *registro, *auxAnterior, *auxProximo;
 
@@ -508,8 +509,19 @@ void removeEncad(ListaHeader *lista){
         /*Altera referencia do primeiro item*/
         lista->primeiro = auxProximo;
 
+        //Altera o vetor para que ele fique correto
+        for(i=0 ; i<lista->qtdElementos ; i++){
+
+            if(vetorPonteiros[i]->rg != lista->ultimo->rg){
+
+                vetorPonteiros[i] = vetorPonteiros[i+1];
+            }
+
+        }
+
         /*Libera memoria*/
         free(registro);
+        vetorPonteiros = realloc(vetorPonteiros, sizeof(ListaEncad) * (lista->qtdElementos-1));
     }
 
     else if(posicao == lista->qtdElementos){
@@ -548,6 +560,7 @@ void removeEncad(ListaHeader *lista){
 
 
     }
+
     /*Altera a quantidade de elementos*/
     lista->qtdElementos = lista->qtdElementos-1;
 
@@ -674,7 +687,7 @@ void mainListaEncadeada(){
                     numItera++;
                     break;
 
-            case 5: removeEncad(&lista);
+            case 5: removeEncad(&lista, vetor);
                     numItera++;
                     break;
 

@@ -29,7 +29,7 @@ void addFinalEncad(ListaHeader *lista, ListaEncad **vetorPonteiros);
 void addMeioEncad(ListaHeader *lista, ListaEncad **vetorPonteiros);
 void addInicioEncad(ListaHeader *lista, ListaEncad **vetorPonteiros);
 void pesquisaEncad(ListaHeader *lista);
-void removeEncad(ListaHeader *lista);
+void removeEncad(ListaHeader *lista, ListaEncad **vetorPonteiros);
 void salvaEncad(ListaHeader *lista);
 void mainListaEncadeada();
 
