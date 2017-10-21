@@ -9,27 +9,32 @@
 #include "Teste.h"
 
 
-void preencheLista(ListaHeader *lista){
+void preencheLista(ListaHeader *listaGerada, ListaEncad **vetorPonteiros, int opcArq){
 
-    FILE *file = fopen("NomeRG10.txt", "r");
+    ContTempo temFuncao;
+    FILE *file;
     char linInicial[30],*linTemp, *strPart;
     char delimit[]=" .,;:";
     ListaEncad *registro;
-    ContTempo temFuncao;
+    long int i, numRegistros;
 
-    temFuncao.temIni = time(NULL);
-    /*Le primeira linha do arquivo*/
+    switch(opcArq){
+        case 1: file = fopen("NomeRG10.txt", "r");
+                numRegistros = 10;
+                break;
+    }
+
+
+    //Le a primeira linha do arquivo
     fgets(linInicial, 30, file);
 
-     while(linInicial[0] != '\0'){
-        numItera++;
-
-        if(lista->qtdElementos == 0){
-            numItera++;
-
-            /* Aloca a Memória necessária */
+    for(i=0; i<numRegistros ; i++){
+        if(listaGerada->qtdElementos == 0){
+            //Aloca Memoria
+            vetorPonteiros[0] = malloc(sizeof(ListaEncad));
             registro = malloc(sizeof(ListaEncad));
 
+            //passa as infromações para registro
             /*Atribui vetor a um ponteiro*/
             linTemp = linInicial;
 
@@ -41,24 +46,26 @@ void preencheLista(ListaHeader *lista){
             strPart = strsep(&linTemp, delimit);
             registro->rg = atoi(strPart);
 
-            /*Altera a quantidade de elementos*/
-            lista->qtdElementos = lista->qtdElementos+1;
+            //Arruma referencias
+            registro->anterior = 0;
+            registro->proximo = 0;
 
-            /*Altera os ponteriros de Proximo e Anterior para nulo*/
-            registro->proximo = NULL;
-            registro->anterior = NULL;
+            //Arruma a lista
+            listaGerada->qtdElementos = listaGerada->qtdElementos+1;
+            listaGerada->primeiro = registro;
+            listaGerada->ultimo = registro;
 
-            /*Altera os ponteriros de Primeiro e Ultimo elementos para o registro, por ele ser o único existente*/
-            lista->primeiro = registro;
-            lista->ultimo = registro;
+            //Adiciona no vetor de ponteiros;
+            vetorPonteiros[0] = registro;
 
+            printf("Nome:%s \n RG:%d", vetorPonteiros[0]->nome,vetorPonteiros[0]->rg);
         }
         else{
-            numItera++;
-
-            /* Aloca a Memória necessária */
+            //Aloca Memoria
+            vetorPonteiros[i] = malloc(sizeof(ListaEncad));
             registro = malloc(sizeof(ListaEncad));
 
+            //passa as infromações para registro
             /*Atribui vetor a um ponteiro*/
             linTemp = linInicial;
 
@@ -70,21 +77,24 @@ void preencheLista(ListaHeader *lista){
             strPart = strsep(&linTemp, delimit);
             registro->rg = atoi(strPart);
 
-            /*Altera a quantidade de elementos*/
-            lista->qtdElementos = lista->qtdElementos+1;
+            //Arruma referencias
+            listaGerada->ultimo->proximo = registro;
+            registro->anterior = listaGerada->ultimo;
+            registro->proximo = 0;
 
-            /*Pega o anterior, altera o anterior para ele ter esse como próximo*/
-            registro->anterior = lista->ultimo;
-            registro->anterior->proximo = registro;
+            //Arruma a lista
+            listaGerada->qtdElementos = listaGerada->qtdElementos+1;
+            listaGerada->ultimo = registro;
 
-            /*Altera o ponteiro para o ultimo valor*/
-            lista->ultimo = registro;
-
+            //Adiciona no vetor de ponteiros;
+            vetorPonteiros[i] = registro;
         }
-        /*Pega próxima linha do arquivo*/
+
         linInicial[0] = '\0';
         fgets(linInicial, 30, file);
+
     }
+
 
     fclose(file);
     temFuncao.temFinal = time(NULL);
@@ -482,8 +492,8 @@ void mainListaEncadeada(){
 
     vetor = malloc(10 * sizeof(ListaEncad));
 
-    //preencheLista(&lista);
-    preencheVetorPonteiros(&lista, vetor);
+    preencheLista(&lista, vetor, 1);
+    //preencheVetorPonteiros(&lista, vetor);
 
     while(opcAcao != -1){
         numItera++;

@@ -8,13 +8,13 @@
 #include "OrganizacaoEncad.h"
 #include "Teste.h"
 
-void preencheVetorPonteiros(ListaHeader *listaGerada, ListaEncad **vetorPonteiros){
+void preencheVetorPonteiros(ListaHeader *listaGerada, ListaEncad **vetorPonteiros, int opcArq){
 
     FILE *file = fopen("NomeRG10.txt", "r");
     char linInicial[30],*linTemp, *strPart;
     char delimit[]=" .,;:";
     ListaEncad *registro;
-    int i;
+    long int i, numRegistros;
 
     //vetorPonteiros = malloc(10 * sizeof(ListaEncad));
 
