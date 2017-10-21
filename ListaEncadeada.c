@@ -473,12 +473,14 @@ void salvaEncad(ListaHeader *lista){
 void mainListaEncadeada(){
 
     ListaHeader lista;
-    ListaEncad *vetor = malloc(sizeof(ListaEncad));
-    int opcAcao = 0;
+    ListaEncad **vetor;
+    int opcAcao = 0, i;
 
     lista.primeiro = NULL;
     lista.ultimo = NULL;
     lista.qtdElementos = 0;
+
+    vetor = malloc(10 * sizeof(ListaEncad));
 
     //preencheLista(&lista);
     preencheVetorPonteiros(&lista, vetor);
@@ -506,6 +508,10 @@ void mainListaEncadeada(){
         switch(opcAcao){
             case 1: printf("\n\n");
                     imprimeEncad(&lista);
+                    printf("\n\n");
+                    for(i=0 ; i<10 ; i++){
+                        printf("Nome:%s||RG:%d\n", vetor[i]->nome, vetor[i]->rg);
+                    }
                     printf("\n\n");
                     numItera++;
                     break;

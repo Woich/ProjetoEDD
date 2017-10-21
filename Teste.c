@@ -8,78 +8,89 @@
 #include "OrganizacaoEncad.h"
 #include "Teste.h"
 
-void preencheVetorPonteiros(ListaHeader *listaGerada, ListaEncad *vetorPonteiros){
+void preencheVetorPonteiros(ListaHeader *listaGerada, ListaEncad **vetorPonteiros){
 
     FILE *file = fopen("NomeRG10.txt", "r");
     char linInicial[30],*linTemp, *strPart;
     char delimit[]=" .,;:";
     ListaEncad *registro;
+    int i;
+
+    //vetorPonteiros = malloc(10 * sizeof(ListaEncad));
 
     //Le a primeira linha do arquivo
     fgets(linInicial, 30, file);
 
-    while(linInicial[0] != '\0'){
+    for(i=0; i<10 ; i++){
         if(listaGerada->qtdElementos == 0){
-            listaGerada->qtdElementos++;
-
-            //Aloca a memória necessária
+            //Aloca Memoria
+            vetorPonteiros[0] = malloc(sizeof(ListaEncad));
             registro = malloc(sizeof(ListaEncad));
-            //vetorPonteiros = malloc(sizeof(ListaEncad));
 
-            //Arruma posição
-            listaGerada->primeiro = registro;
-            listaGerada->ultimo = registro;
-            vetorPonteiros[0] = *registro;
+            //passa as infromações para registro
+            /*Atribui vetor a um ponteiro*/
+            linTemp = linInicial;
+
+            /*Separa a String, pega o nome*/
+            strPart = strsep(&linTemp, delimit);
+            strcpy(registro->nome, strPart);
+
+            /*Separa a String, pega o rg*/
+            strPart = strsep(&linTemp, delimit);
+            registro->rg = atoi(strPart);
 
             //Arruma referencias
-            registro->anterior = NULL;
-            registro->proximo = NULL;
+            registro->anterior = 0;
+            registro->proximo = 0;
 
-            //Atribui vetor a um ponteiro
-            linTemp = linInicial;
-
-            //Separa a String, pega o nome
-            strPart = strsep(&linTemp, delimit);
-            strcpy(registro->nome, strPart);
-
-            //Separa a String, pega o rg
-            strPart = strsep(&linTemp, delimit);
-            registro->rg = atoi(strPart);
-        }
-        else{
-            //Realoca memória
-            vetorPonteiros = realloc(vetorPonteiros, (listaGerada->qtdElementos+1)*sizeof(ListaEncad));
-
-            //Aloca memória para novo registro
-            registro = malloc(sizeof(ListaEncad));
-
-            //Aumenta número de elementos da lista
-            listaGerada->qtdElementos++;
-
-            //Altera refencia anterior
-            listaGerada->ultimo->proximo = registro;
-
-            //Altera o ultimo elemento da lista
+            //Arruma a lista
+            listaGerada->qtdElementos = listaGerada->qtdElementos+1;
+            listaGerada->primeiro = registro;
             listaGerada->ultimo = registro;
 
-            //Atribui vetor a um ponteiro
+            //Adiciona no vetor de ponteiros;
+            vetorPonteiros[0] = registro;
+
+            printf("Nome:%s \n RG:%d", vetorPonteiros[0]->nome,vetorPonteiros[0]->rg);
+        }
+        else{
+            //Aloca Memoria
+            vetorPonteiros[i] = malloc(sizeof(ListaEncad));
+            registro = malloc(sizeof(ListaEncad));
+
+            //passa as infromações para registro
+            /*Atribui vetor a um ponteiro*/
             linTemp = linInicial;
 
-            //Separa a String, pega o nome
+            /*Separa a String, pega o nome*/
             strPart = strsep(&linTemp, delimit);
             strcpy(registro->nome, strPart);
 
-            //Separa a String, pega o rg
+            /*Separa a String, pega o rg*/
             strPart = strsep(&linTemp, delimit);
             registro->rg = atoi(strPart);
 
-            //Adiciona elemento na lista
-            vetorPonteiros[listaGerada->qtdElementos-1] = *registro;
+            //Arruma referencias
+            listaGerada->ultimo->proximo = registro;
+            registro->anterior = listaGerada->ultimo;
+            registro->proximo = 0;
+
+            //Arruma a lista
+            listaGerada->qtdElementos = listaGerada->qtdElementos+1;
+            listaGerada->ultimo = registro;
+
+            //Adiciona no vetor de ponteiros;
+            vetorPonteiros[i] = registro;
+
+            printf("Nome:%s ||| RG:%d", vetorPonteiros[0]->nome,vetorPonteiros[0]->rg);
         }
 
         linInicial[0] = '\0';
         fgets(linInicial, 30, file);
+
     }
+
+
 
     fclose(file);
     printf("\n Função Finalizada\n\n");
