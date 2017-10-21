@@ -353,36 +353,40 @@ void pesquisaEncad(ListaHeader *lista){
 
     temFuncao.temIni = time(NULL);
 
-    numItera++;
-
-    printf("\nQual a Opcao de Busca?\n"
-            "(1)Posicao\n"
-            "(2)RG\n");
-    scanf("%d", &opcBusca);
-    getchar();
-
-
-
-    if(opcBusca == 1){
+    while(opcBusca != 0){
         numItera++;
 
-        printf("\nQual a Posicao\n");
-        scanf("%d", &posicao);
+        printf("\nQual a Opcao de Busca?\n"
+               "(1)Posicao\n"
+               "(2)RG\n");
+        scanf("%d", &opcBusca);
         getchar();
 
-        for(i=1 ; i<posicao ; i++){
+        registro = lista->primeiro;
+
+        /*---------------Posição--------------------*/
+        if(opcBusca == 1){
             numItera++;
-            /*Corre a lista para encontrar o item desejado*/
-            registro = registro->proximo;
-        }
 
-        printf("\nPosicao:%i\n"
-                    "Nome:%s\n"
-                    "RG:%i\n", i, registro->nome, registro->rg);
+            printf("\nQual a Posicao\n");
+            scanf("%d", &posicao);
+            getchar();
 
-        /*Altera o valor para quebrar o loop while*/
-        opcBusca = 0;
+            for(i=1 ; i<posicao ; i++){
+                numItera++;
+                /*Corre a lista para encontrar o item desejado*/
+                registro = registro->proximo;
+                numCopias++;
+            }
+
+            printf("\nPosicao:%i\n"
+                       "Nome:%s\n"
+                       "RG:%i\n", i, registro->nome, registro->rg);
+
+            /*Altera o valor para quebrar o loop while*/
+            opcBusca = 0;
         }
+        /*----------------- RG --------------------*/
         else if(opcBusca == 2){
             numItera++;
 
@@ -402,6 +406,7 @@ void pesquisaEncad(ListaHeader *lista){
                     numItera++;
                     /*Continua correndo o vetor até o rg ser igual*/
                     registro = registro->proximo;
+                    numCopias++;
                 }
             }
 
@@ -414,6 +419,7 @@ void pesquisaEncad(ListaHeader *lista){
 
         }
 
+    }
 
 
     temFuncao.temFinal = time(NULL);
