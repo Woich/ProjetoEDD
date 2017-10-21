@@ -245,42 +245,45 @@ void quickSortEncad(ListaHeader *lista, ListaEncad **vetorPont, long int iniComp
     long int i=iniComp, j=fimComp, pivo;//'i' e 'j' são controladores de loops, enquanto o pivo é uma medida para a organização
     ListaEncad *pontAux;//Ponteiro Auxiliar
 
-    pivo = (vetorPont[i]->rg + vetorPont[j-1]->rg)/2;
+    if(j - i > 1){
+        pivo = (vetorPont[i]->rg + vetorPont[j-1]->rg)/2;
 
-    while(i < j){
+        while(i < j){
 
-        //Rodando o i
-        while(vetorPont[i]->rg < pivo){
-            i++;
+            //Rodando o i
+            while(vetorPont[i]->rg < pivo){
+                i++;
+                numItera++;
+            }
+            //Rodando o j
+            while(vetorPont[j-1]->rg > pivo){
+                j--;
+                numItera++;
+            }
+
             numItera++;
+
+            //Atribui valor para o auxiliar
+            pontAux = vetorPont[i];
+            numCopias++;
+
+            //Troca valor de vetorPont[i]
+            vetorPont[i] = vetorPont[j-1];
+            numCopias++;
+
+            //troca valor de vetorPont[j]
+            vetorPont[j-1] = pontAux;
+            numCopias++;
+
         }
-        //Rodando o j
-        while(vetorPont[j-1]->rg > pivo){
-            j--;
-            numItera++;
+        //Secção baseada no 'j'
+        if(j > iniComp){
+            quickSortEncad(lista, vetorPont, iniComp, j);
+        }
+        //Secção baseada no 'i'
+        if(i< fimComp){
+            quickSortEncad(lista, vetorPont, i, fimComp);
         }
 
-        numItera++;
-
-        //Atribui valor para o auxiliar
-        pontAux = vetorPont[i];
-        numCopias++;
-
-        //Troca valor de vetorPont[i]
-        vetorPont[i] = vetorPont[j-1];
-        numCopias++;
-
-        //troca valor de vetorPont[j]
-        vetorPont[j-1] = pontAux;
-        numCopias++;
-
-    }
-    //Secção baseada no 'j'
-    if(j > iniComp){
-        quickSortEncad(lista, vetorPont, iniComp, j);
-    }
-    //Secção baseada no 'i'
-    if(i< fimComp){
-        quickSortEncad(lista, vetorPont, i, fimComp);
     }
 }
