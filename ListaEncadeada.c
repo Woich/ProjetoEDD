@@ -25,33 +25,45 @@ void preencheLista(ListaHeader *listaGerada, ListaEncad **vetorPonteiros, int op
     switch(opcArq){
         case 1: file = fopen("NomeRG10.txt", "r");
                 numRegistros = 10;
+                numItera++;
                 break;
         case 2: file = fopen("NomeRG50.txt", "r");
                 numRegistros = 50;
+                numItera++;
                 break;
         case 3: file = fopen("NomeRG100.txt", "r");
                 numRegistros = 100;
+                numItera++;
                 break;
         case 4: file = fopen("NomeRG1K.txt", "r");
                 numRegistros = 1000;
+                numItera++;
                 break;
         case 5: file = fopen("NomeRG10K.txt", "r");
                 numRegistros = 10000;
+                numItera++;
                 break;
         case 6: file = fopen("NomeRG1M.txt", "r");
                 numRegistros = 1000000;
+                numItera++;
                 break;
         case 7: file = fopen("NomeRG100M.txt", "r");
                 numRegistros = 11748444;
+                numItera++;
                 break;
     }
 
 
     //Le a primeira linha do arquivo
     fgets(linInicial, 30, file);
+    numCopias++;
 
     for(i=0; i<numRegistros ; i++){
+        numItera++;
+
         if(listaGerada->qtdElementos == 0){
+            numItera++;
+
             //Aloca Memoria
             vetorPonteiros[0] = malloc(sizeof(ListaEncad));
             registro = malloc(sizeof(ListaEncad));
@@ -59,14 +71,17 @@ void preencheLista(ListaHeader *listaGerada, ListaEncad **vetorPonteiros, int op
             //passa as infromações para registro
             /*Atribui vetor a um ponteiro*/
             linTemp = linInicial;
+            numCopias++;
 
             /*Separa a String, pega o nome*/
             strPart = strsep(&linTemp, delimit);
             strcpy(registro->nome, strPart);
+            numCopias++;
 
             /*Separa a String, pega o rg*/
             strPart = strsep(&linTemp, delimit);
             registro->rg = atoi(strPart);
+            numCopias++;
 
             //Arruma referencias
             registro->anterior = 0;
@@ -74,15 +89,20 @@ void preencheLista(ListaHeader *listaGerada, ListaEncad **vetorPonteiros, int op
 
             //Arruma a lista
             listaGerada->qtdElementos = listaGerada->qtdElementos+1;
+
             listaGerada->primeiro = registro;
+            numCopias++;
+
             listaGerada->ultimo = registro;
+            numCopias++;
 
             //Adiciona no vetor de ponteiros;
             vetorPonteiros[0] = registro;
-
-            printf("Nome:%s \n RG:%d", vetorPonteiros[0]->nome,vetorPonteiros[0]->rg);
+            numCopias++;
         }
         else{
+            numItera++;
+
             //Aloca Memoria
             vetorPonteiros[i] = malloc(sizeof(ListaEncad));
             registro = malloc(sizeof(ListaEncad));
@@ -90,26 +110,36 @@ void preencheLista(ListaHeader *listaGerada, ListaEncad **vetorPonteiros, int op
             //passa as infromações para registro
             /*Atribui vetor a um ponteiro*/
             linTemp = linInicial;
+            numCopias++;
 
             /*Separa a String, pega o nome*/
             strPart = strsep(&linTemp, delimit);
             strcpy(registro->nome, strPart);
+            numCopias++;
 
             /*Separa a String, pega o rg*/
             strPart = strsep(&linTemp, delimit);
             registro->rg = atoi(strPart);
+            numCopias++;
 
             //Arruma referencias
             listaGerada->ultimo->proximo = registro;
+            numCopias++;
+
             registro->anterior = listaGerada->ultimo;
+            numCopias++;
+
             registro->proximo = 0;
 
             //Arruma a lista
             listaGerada->qtdElementos = listaGerada->qtdElementos+1;
+
             listaGerada->ultimo = registro;
+            numCopias++;
 
             //Adiciona no vetor de ponteiros;
             vetorPonteiros[i] = registro;
+            numCopias++;
         }
 
         linInicial[0] = '\0';
@@ -461,6 +491,9 @@ void removeEncad(ListaHeader *lista){
     scanf("%d", &posicao);
     getchar();
 
+    numCopias = 0;
+    numItera = 0;
+
     registro = lista->primeiro;
     if(posicao == 1){
         numItera++;
@@ -520,7 +553,7 @@ void removeEncad(ListaHeader *lista){
 
     temFuncao.temFinal = time(NULL);
     temFuncao.tempo = difftime(temFuncao.temFinal, temFuncao.temIni);
-    printf("\n Tempo da Funcao: %f segundos", temFuncao.tempo);
+    printf("\n Tempo da Funcao: %f segundos\n Numero Iteracoes:%d\n Numero Copias:%d", temFuncao.tempo, numItera, numCopias);
     printf("\n\n");
 
 
