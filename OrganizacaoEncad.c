@@ -7,69 +7,63 @@
 #include "Organizacao.h"
 #include "OrganizacaoEncad.h"
 
-void mainOrgEncad(ListaHeader *listaAvaliada){
-    int opcSort;
+void selecSortEncad(ListaHeader *lista, ListaEncad **vetorPont){
+    long int i, j;//contadores para o 'for'
 
-    printf("Qual a opção de Troca de lemento que você deseja usar?"
-           "(1)Selection Sort");
+    ListaEncad *pontAux;//Ponteiro auxiliar para troca de elementos
 
-    scanf("%d", &opcSort);
+    //pontAux = malloc(sizeof(ListaEncad));
 
-    switch(opcSort){
+    numCopias=0;
+    numItera=0;
 
-    case 1: selecSort(listaAvaliada);
+    for(i=0 ; i<lista->qtdElementos ; i++){
 
-    }
+        for(j=0 ; j<lista->qtdElementos ; j++){
 
+            if(vetorPont[j]->rg > vetorPont[i]->rg){
+                //Atribui valor para o auxiliar
+                pontAux = vetorPont[i];
 
-}
+                //Troca valor de vetorPont[i]
+                vetorPont[i] = vetorPont[j];
 
-void selecSort(ListaHeader *listaAval){
+                //troca valor de vetorPont[j]
+                vetorPont[j] = pontAux;
 
-    ListaEncad *avaliado, *atual;
-    int i, numAlte=1;
-
-    avaliado = listaAval->primeiro;
-    atual = listaAval->primeiro;
-
-    while(numAlte != 0){
-
-        for(i=0 ; i<listaAval->qtdElementos ; i++){
-            atual = atual->proximo;
-
-            if(atual->rg < avaliado->rg){
-                trocaSimples(atual, avaliado);
-                numAlte++;
             }
         }
 
-        avaliado = avaliado->proximo;
+    }
+
+    //Esse for serve para arrumas todas as referencias de todos os pontos do vetor
+    for(i=0 ; i<lista->qtdElementos ; i++){
+
+        if(i == 0){
+            //Muda o primeiro elemento da lista
+            lista->primeiro = vetorPont[i];
+
+            vetorPont[i]->anterior = 0;
+
+            vetorPont[i]->proximo = vetorPont[i+1];
+        }
+        else if(i == lista->qtdElementos){
+            //Muda o ultimo elemento da lista
+            lista->ultimo = vetorPont[i];
+
+            vetorPont[i]->proximo = 0;
+
+            vetorPont[i]->anterior = vetorPont[i-1];
+        }
+        else{
+            //Altera os elemento do meio
+            vetorPont[i]->anterior = vetorPont[i-1];
+
+            vetorPont[i]->proximo = vetorPont[i+1];
+
+        }
 
     }
 
 
-}
-
-void trocaSimples(ListaEncad *elemento1, ListaEncad *elemento2){
-    int rgAux, i;
-    char nomeAux[30];
-
-    rgAux = elemento1->rg;
-
-    elemento1->rg = elemento2->rg;
-
-    elemento2->rg = rgAux;
-
-
-    for(i=0; i<30 ; i++){
-        nomeAux[i] = elemento1->nome[i];
-    }
-
-    for(i=0; i<30 ; i++){
-        elemento1->nome[i] = elemento2->nome[i];
-    }
-
-    for(i=0; i<30 ; i++){
-        elemento2->nome[i] = nomeAux[i];
-    }
 }

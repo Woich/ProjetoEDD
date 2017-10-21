@@ -652,7 +652,7 @@ void mainListaEncadeada(){
 
     ListaHeader lista;
     ListaEncad **vetor;
-    int opcAcao = 0, i, opcArq;
+    int opcAcao = 0, i, opcArq, opcSort;
     long int numRegistros;
 
     lista.primeiro = NULL;
@@ -670,7 +670,7 @@ void mainListaEncadeada(){
     scanf("%d", &opcArq);
 
     switch(opcArq){
-        case 1:numRegistros = 10;
+        case 1: numRegistros = 10;
                 break;
         case 2: numRegistros = 50;
                 break;
@@ -749,12 +749,19 @@ void mainListaEncadeada(){
                     numItera++;
                     break;
 
-            case 10: printf("\nNumero Copias Feitas: %d\n\n", numCopias);
+            case 10:printf("\nNumero Copias Feitas: %d\n\n", numCopias);
                     numItera++;
                     break;
 
-            case 11:mainOrgEncad(&lista);
-                    numItera++;
+            case 11:numItera++;
+                    printf("Qual metodo de organizacao?\n"
+                           "(1)Selection Sort");
+                    scanf("%d", &opcSort);
+
+                    switch(opcSort){
+                        case 1:selecSortEncad(&lista, vetor);
+                               break;
+                    }
                     break;
 
         }
