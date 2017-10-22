@@ -293,3 +293,5 @@ void quickSortEncad(ListaHeader *lista, ListaEncad **vetorPont, long int iniComp
     }
 
 }
+
+void mergeSortEncad(ListaHeader *lista, ListaEncad **vetorPont, long int iniComp, long int fimComp){}
