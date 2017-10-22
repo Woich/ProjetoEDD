@@ -707,6 +707,7 @@ void mainListaEncadeada(){
                "(09) Numero de IF'S\n"
                "(10) Numero de Copias\n"
                "(11) Organizar\n"
+               "(12) Organizar\n"
                "(-1) Sair\n");
 
         scanf("%i", &opcAcao);
@@ -912,6 +913,15 @@ void mainListaEncadeada(){
                                 printf("\n\n");
                                 break;
                     }
+                    break;
+
+            case 12:numCopias=0; numItera=0;
+                    temFuncao.temIni = time(NULL);
+                    pesquisaBinariaEncad(&lista, vetor);
+                    temFuncao.temFinal = time(NULL);
+                    temFuncao.tempo = difftime(temFuncao.temFinal, temFuncao.temIni);
+                    printf("\n Tempo da Funcao: %f segundos\n Numero Iteracoes:%d\n Numero Copias:%d", temFuncao.tempo, numItera, numCopias);
+                    printf("\n\n");
                     break;
 
         }

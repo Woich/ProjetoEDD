@@ -1,9 +1,12 @@
 #ifndef ORGANIZACAO
 #define ORGANIZACAO
 
-void mainOrganizacao(ListaHeader *lista);
-void selctionSort(ListaHeader *lista);
-void trocaElementos(ListaEncad *elemento1, ListaEncad *elemento2, ListaHeader *listaAtual);
-void trocaElementosSimples(ListaEncad *elemento1, ListaEncad *elemento2);
+void selecSortSquencial(ListaHeader *lista, ListaPessoa **vetorPont);
+void bubbleSortSquencial(ListaHeader *lista, ListaPessoa **vetorPont);
+void insertionSortSquencial(ListaHeader *lista, ListaPessoa **vetorPont);
+void quickSortSquencial(ListaHeader *lista, ListaPessoa **vetorPont, long int iniComp, long int fimComp);
+void mergeSortSquencial(ListaHeader *lista, ListaPessoa **vetorPont, long int iniComp, long int fimComp);
+void shellSortSquencial(ListaHeader *lista, ListaPessoa **vetorPont);
+void pesquisaBinariaSquencial(ListaHeader *lista, ListaPessoa **vetorPont);
 
 #endif // ORGANIZACAO
