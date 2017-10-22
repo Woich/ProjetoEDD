@@ -320,47 +320,43 @@ void mergeSortEncad(ListaHeader *lista, ListaEncad **vetorPont, long int iniComp
     //Inicia vetor temporario
     vetorTemp = malloc(sizeof(ListaEncad) * (fimComp-iniComp+1));
 
-    while(i <= meio || j <= fimComp){
+    while(i <= meio && j <= fimComp){
 
 
-        if(i == meio+1){
+        if(vetorPont[i]->rg < vetorPont[j]->rg){
+            vetorTemp[k] = vetorPont[i];
+            i++;
+            k++;
+            numCopias++;
+            numItera++;
+        }
+        else{
             vetorTemp[k] = vetorPont[j];
             j++;
             k++;
             numCopias++;
             numItera++;
         }
-        else{
-            if(j == fimComp+1){
-                vetorTemp[k] = vetorPont[i];
-                i++;
-                k++;
-                numCopias++;
-                numItera++;
-            }
-
-            else{
-                if(vetorPont[i]->rg < vetorPont[j]->rg){
-                    vetorTemp[k] = vetorPont[i];
-                    i++;
-                    k++;
-                    numCopias++;
-                    numItera++;
-                }
-                else{
-                    vetorTemp[k] = vetorPont[j];
-                    j++;
-                    k++;
-                    numCopias++;
-                    numItera++;
-                }
-            }
-        }
 
         numItera = numItera+2;
 
     }
 
+    while(i<= meio){
+        vetorTemp[k] = vetorPont[i];
+        i++;
+        k++;
+        numCopias++;
+        numItera++;
+    }
+
+    while(j<= fimComp){
+        vetorTemp[k] = vetorPont[j];
+        j++;
+        k++;
+        numCopias++;
+        numItera++;
+    }
     k=0;
     for(i=iniComp ; i<=fimComp ; i++){
         vetorPont[i]=vetorTemp[k];
@@ -369,6 +365,7 @@ void mergeSortEncad(ListaHeader *lista, ListaEncad **vetorPont, long int iniComp
         numItera++;
     }
     free(vetorTemp);
-}
 
-void shellSortEncad(ListaHeader *lista, ListaEncad **vetorPont, long int iniComp, long int fimComp){}
+
+
+}
