@@ -414,3 +414,23 @@ void shellSortEncad(ListaHeader *lista, ListaEncad **vetorPont){
     }
 
 }
+
+void pesquisaBinariaEncad(ListaHeader *lista, ListaEncad **vetorPont){
+
+    long int rgBuscado,
+             posicao,//posição a ser avaliada
+             inicio,//pisião inicial da lista ser avaliada
+             fim;// posição final da lista a ser avaliada
+
+    printf("Qual rg que voce procura?\n");
+    scanf("%d", &rgBuscado);
+
+    inicio=0;
+    fim=lista->qtdElementos-1;
+
+    while(inicio <= fim){
+        posicao = (fim + inicio)/2;
+
+        if(vetorPont[posicao])
+    }
+}
