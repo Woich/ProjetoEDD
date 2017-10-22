@@ -376,25 +376,38 @@ void shellSortEncad(ListaHeader *lista, ListaEncad **vetorPont){
     tam = lista->qtdElementos;
     salto = 1;
 
-    //Esse calculo foi criado com base em um estudo, faz a divisão inicial de 4 em 4
+    //Esse calculo foi criado com base em um estudo, faz a divisão inicial de 'x' em 'x', sendo selecionado com base no tamanho da lista
     while(salto<tam){
         salto = (salto)*3+1;
     }
 
     while(salto > 1){
         //Isso é necessesário para impedor que se pegue um valor acima dos quue existe, impede acesso a memória inexistente
+        //Depois se usa apenas para reduzir o salto gradualmente
         salto /= 3;
 
+        //Aqui se gera um valor para percorrer o vetor de traz para a frente, com o elemento inicial sendo um dos ultimos elementos da lista
         for(i=salto ; i<tam ; i++){
+            numItera++;
+            // se gera uma referencia para o auxiliar sendo o elemento base a ser avaliado
             auxilar = vetorPont[i];
+            numCopias++;
+            //se inicializa 'j' com a próxima posição após o 'i'
             j = i-salto;
 
+            //Compara para ver se já foi todos os elementos daquela linha de saltos já foram usados e se os valor do rg salvo no ponteiro auxilar ainda continua menor
+            //para poder colocar ele na sua posição "correta" naquele momento
             while(j >= 0 && auxilar->rg < vetorPont[j]->rg){
+                numItera++;
                 vetorPont[j+salto] = vetorPont[j];
+                numCopias++;
+                //Reduz o 'j' gradualmente
                 j -= salto;
             }
 
+            //Coloca a refereancia do inicial na sua posição "correta" no momento
             vetorPont[j+salto] = auxilar;
+            numCopias++;
 
         }
 
