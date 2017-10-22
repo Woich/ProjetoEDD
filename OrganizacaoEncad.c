@@ -247,9 +247,10 @@ void quickSortEncad(ListaHeader *lista, ListaEncad **vetorPont, long int iniComp
     ListaEncad *pontAux;//Ponteiro Auxiliar
     int meio;
 
+    //Seleção do pivo
     meio = (i+j)/2;
     pivo = vetorPont[meio]->rg;
-
+    //Enquanto i e j não coinciderem em valor continua rodando as trocas
     while(i < j){
 
         //Rodando o i
@@ -262,7 +263,7 @@ void quickSortEncad(ListaHeader *lista, ListaEncad **vetorPont, long int iniComp
             j--;
             numItera++;
         }
-        if(i<=j){
+        if(i < j){
             numItera++;
 
             //Atribui valor para o auxiliar

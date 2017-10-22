@@ -179,7 +179,7 @@ void imprimeEncad(ListaHeader *lista, ListaEncad **vetorPonteiros){
     }*/
 
     for(i=0 ; i<lista->qtdElementos ; i++){
-        /*Imprime registro em questão*/
+        //Imprime registro em questão
         printf("%d: %s,%d \n", i+1, vetorPonteiros[i]->nome, vetorPonteiros[i]->rg);
     }
 
@@ -772,15 +772,51 @@ void mainListaEncadeada(){
                         case 3:insertionSortEncad(&lista, vetor);
                                break;
 
-                        case 4:numCopias=0; numItera=0;
-                               temFuncao.temIni = time(NULL);
-                               numElementos = lista.qtdElementos;
-                               quickSortEncad(&lista, vetor, 0, numElementos);
-                               temFuncao.temFinal = time(NULL);
-                               temFuncao.tempo = difftime(temFuncao.temFinal, temFuncao.temIni);
-                               printf("\n Tempo da Funcao: %f segundos\n Numero Iteracoes:%d\n Numero Copias:%d", temFuncao.tempo, numItera, numCopias);
-                               printf("\n\n");
-                               break;
+                        case 4: numCopias=0; numItera=0;
+                                temFuncao.temIni = time(NULL);
+                                numElementos = lista.qtdElementos;
+                                quickSortEncad(&lista, vetor, 0, numElementos);
+                                //Esse for serve para arrumas todas as referencias de todos os pontos do vetor
+                                for(i=0 ; i<lista.qtdElementos ; i++){
+                                    numItera++;
+                                    if(i == 0){
+                                        numItera++;
+                                        //Muda o primeiro elemento da lista
+                                        lista.primeiro = vetor[i];
+                                        numCopias++;
+
+                                        vetor[i]->anterior = 0;
+
+                                        vetor[i]->proximo = vetor[i+1];
+                                        numCopias++;
+                                    }
+                                    else if(i == lista.qtdElementos){
+                                        numItera++;
+                                        //Muda o ultimo elemento da lista
+                                        lista.ultimo = vetor[i];
+                                        numCopias++;
+
+                                        vetor[i]->proximo = 0;
+
+                                        vetor[i]->anterior = vetor[i-1];
+                                        numCopias++;
+                                    }
+                                    else{
+                                        numItera++;
+                                        //Altera os elemento do meio
+                                        vetor[i]->anterior = vetor[i-1];
+                                        numCopias++;
+
+                                        vetor[i]->proximo = vetor[i+1];
+                                        numCopias++;
+
+                                    }
+                                }
+                                temFuncao.temFinal = time(NULL);
+                                temFuncao.tempo = difftime(temFuncao.temFinal, temFuncao.temIni);
+                                printf("\n Tempo da Funcao: %f segundos\n Numero Iteracoes:%d\n Numero Copias:%d", temFuncao.tempo, numItera, numCopias);
+                                printf("\n\n");
+                                break;
                     }
                     break;
 
