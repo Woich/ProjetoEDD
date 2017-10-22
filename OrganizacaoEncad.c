@@ -245,47 +245,50 @@ void insertionSortEncad(ListaHeader *lista, ListaEncad **vetorPont){
 void quickSortEncad(ListaHeader *lista, ListaEncad **vetorPont, long int iniComp, long int fimComp){//Esse possui inicio e fim do vetor para limitadores
     long int i=iniComp, j=fimComp, pivo;//'i' e 'j' são controladores de loops, enquanto o pivo é uma medida para a organização
     ListaEncad *pontAux;//Ponteiro Auxiliar
+    int meio;
 
-    if(j - i > 1){
-        pivo = (vetorPont[i]->rg + vetorPont[j-1]->rg)/2;
+    meio = (i+j)/2;
+    pivo = vetorPont[meio]->rg;
 
-        while(i < j){
+    while(i < j){
 
-            //Rodando o i
-            while(vetorPont[i]->rg < pivo){
-                i++;
-                numItera++;
-            }
-            //Rodando o j
-            while(vetorPont[j-1]->rg > pivo){
-                j--;
-                numItera++;
-            }
-            if(i<=j){
-                numItera++;
-
-                //Atribui valor para o auxiliar
-                pontAux = vetorPont[i];
-                numCopias++;
-
-                //Troca valor de vetorPont[i]
-                vetorPont[i] = vetorPont[j-1];
-                numCopias++;
-
-                //troca valor de vetorPont[j]
-                vetorPont[j-1] = pontAux;
-                numCopias++;
-            }
-
+        //Rodando o i
+        while(vetorPont[i]->rg < pivo){
+            i++;
+            numItera++;
         }
-        //Secção baseada no 'j'
-        if(j > iniComp){
-            quickSortEncad(lista, vetorPont, iniComp, j);
+        //Rodando o j
+        while(vetorPont[j-1]->rg > pivo){
+            j--;
+            numItera++;
         }
-        //Secção baseada no 'i'
-        if(i< fimComp){
-            quickSortEncad(lista, vetorPont, i, fimComp);
+        if(i<=j){
+            numItera++;
+
+            //Atribui valor para o auxiliar
+            pontAux = vetorPont[i];
+            numCopias++;
+
+            //Troca valor de vetorPont[i]
+            vetorPont[i] = vetorPont[j-1];
+            numCopias++;
+
+            //troca valor de vetorPont[j]
+            vetorPont[j-1] = pontAux;
+            numCopias++;
+
+            i++;
+            j--;
         }
 
     }
+    //Secção baseada no 'j'
+    if(j > iniComp){
+        quickSortEncad(lista, vetorPont, iniComp, j);
+    }
+    //Secção baseada no 'i'
+    if(i< fimComp){
+        quickSortEncad(lista, vetorPont, i, fimComp);
+    }
+
 }

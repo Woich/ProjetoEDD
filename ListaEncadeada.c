@@ -773,13 +773,13 @@ void mainListaEncadeada(){
                                break;
 
                         case 4:numCopias=0; numItera=0;
-                               //temFuncao->temIni = time(NULL);
+                               temFuncao.temIni = time(NULL);
                                numElementos = lista.qtdElementos;
                                quickSortEncad(&lista, vetor, 0, numElementos);
-                               //temFuncao->temFinal = time(NULL);
-                               //temFuncao->tempo = difftime(temFuncao.temFinal, temFuncao.temIni);
-                               //printf("\n Tempo da Funcao: %f segundos\n Numero Iteracoes:%d\n Numero Copias:%d", temFuncao.tempo, numItera, numCopias);
-                               //printf("\n\n");
+                               temFuncao.temFinal = time(NULL);
+                               temFuncao.tempo = difftime(temFuncao.temFinal, temFuncao.temIni);
+                               printf("\n Tempo da Funcao: %f segundos\n Numero Iteracoes:%d\n Numero Copias:%d", temFuncao.tempo, numItera, numCopias);
+                               printf("\n\n");
                                break;
                     }
                     break;
