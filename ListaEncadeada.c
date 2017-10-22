@@ -759,7 +759,8 @@ void mainListaEncadeada(){
                            "(1)Selection Sort\n"
                            "(2)Bubble Sort\n"
                            "(3)Insertion Sort\n"
-                           "(4)Quick Sort\n");
+                           "(4)Quick Sort\n"
+                           "(5)Merge Sort\n");
                     scanf("%d", &opcSort);
 
                     switch(opcSort){
@@ -820,7 +821,7 @@ void mainListaEncadeada(){
 
                         case 5: numCopias=0; numItera=0;
                                 temFuncao.temIni = time(NULL);
-                                numElementos = lista.qtdElementos;
+                                numElementos = lista.qtdElementos-1;
                                 mergeSortEncad(&lista, vetor, 0, numElementos);
                                 //Esse for serve para arrumas todas as referencias de todos os pontos do vetor
                                 for(i=0 ; i<lista.qtdElementos ; i++){

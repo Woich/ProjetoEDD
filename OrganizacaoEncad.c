@@ -296,84 +296,64 @@ void quickSortEncad(ListaHeader *lista, ListaEncad **vetorPont, long int iniComp
 
 void mergeSortEncad(ListaHeader *lista, ListaEncad **vetorPont, long int iniComp, long int fimComp){
     //Pega o meio da lista para fazer a divisão mais tarde
-    long int meio;
-
-    //Enquanto foi pissível ele faz a divisão das listas
-    if(iniComp < fimComp){
-        meio = (iniComp + fimComp)/2;
-        mergeSortEncad(lista, vetorPont, iniComp, meio);
-        mergeSortEncad(lista, vetorPont, meio+1, fimComp);
-        mergeSortEncadAltera(lista, vetorPont, iniComp, fimComp);
-        numItera++;
-    }
-
-}
-
-//Esse é o nome pois é esse o código que faz a alteração de posições, o 'merge'
-void mergeSortEncadAltera(ListaHeader *lista, ListaEncad **vetorPont, long int iniComp, long int fimComp){
-    long int meioVetor, i, j, k;//Controladores de tamanho
+    long int meio, i, j, k;//Controladores de tamanho
     ListaEncad **vetorTemp;
 
+    //Inicia vetor temporario
+    vetorTemp = malloc(sizeof(ListaEncad) * (fimComp-iniComp+1));
+
+
+    if(iniComp == fimComp){
+        numItera++;
+        return;
+    }
+    //Enquanto foi pissível ele faz a divisão das listas
+    meio = (iniComp + fimComp)/2;
+    mergeSortEncad(lista, vetorPont, iniComp, meio);
+    mergeSortEncad(lista, vetorPont, meio+1, fimComp);
+
     //Inicia variaveis
-    meioVetor = (iniComp + fimComp)/2;
     i = iniComp;
-    j = meioVetor+1;
+    j = meio+1;
     k = 0;
 
     //Inicia vetor temporario
     vetorTemp = malloc(sizeof(ListaEncad) * (fimComp-iniComp+1));
 
-    while(i <= meioVetor && j<= fimComp){//Isso indica que 'i' ja passou da metade, ou seja, já foi todos os elementos da primeira metade
+    while(i <= meio && j <= fimComp){
 
-        if(i == meioVetor){
+
+        if(vetorPont[i]->rg < vetorPont[j]->rg){
+            vetorTemp[k] = vetorPont[i];
+            i++;
+            k++;
+        }
+        else{
             vetorTemp[k] = vetorPont[j];
             j++;
             k++;
-            numItera++;
-            numCopias++;
-        }
-
-        else{
-
-            if(j == fimComp){ //Isso indica que 'j' ja passou do fim, ou seja, já foi todos os elementos da segunda metade
-                vetorTemp[k] = vetorPont[i];
-                i++;
-                k++;
-                numItera++;
-                numCopias++;
-            }
-            else{
-
-                if(vetorPont[i]->rg < vetorPont[j]->rg){//Comparação para ver qual tem o menor e deve ser o próximo
-                    vetorTemp[k] = vetorPont[i];
-                    i++;
-                    k++;
-                    numItera++;
-                    numCopias++;
-                }
-
-                else{
-                    vetorTemp[k] = vetorPont[j];
-                    j++;
-                    k++;
-                    numItera++;
-                    numCopias++;
-                }
-
-            }
-
         }
 
     }
 
-    for(i=iniComp ; i<= fimComp ; i++){
-        k=i;
-        numCopias++;
-
-        vetorPont[i] = vetorTemp[k];
-        numItera++;
-        numCopias++;
+    while(i<= meio){
+        vetorTemp[k] = vetorPont[i];
+        i++;
+        k++;
     }
+
+    while(j<= fimComp){
+        vetorTemp[k] = vetorPont[j];
+        j++;
+        k++;
+    }
+    k=0;
+    for(i=iniComp ; i<=fimComp ; i++){
+        vetorPont[i]=vetorTemp[k];
+        k++;
+    }
+    free(vetorTemp);
+
 
 
 }
