@@ -365,7 +365,39 @@ void mergeSortEncad(ListaHeader *lista, ListaEncad **vetorPont, long int iniComp
         numItera++;
     }
     free(vetorTemp);
+}
 
+void shellSortEncad(ListaHeader *lista, ListaEncad **vetorPont){
+    long int i, j;//Controladores
+    long int salto, tam;//tamanho do salto que deve ser dado, tamanho do vetor passado
+    ListaEncad *auxilar;
 
+    //inicializa variaveis
+    tam = lista->qtdElementos;
+    salto = 1;
+
+    //Esse calculo foi criado com base em um estudo, faz a divisão inicial de 4 em 4
+    while(salto<tam){
+        salto = (salto)*3+1;
+    }
+
+    while(salto > 1){
+        //Isso é necessesário para impedor que se pegue um valor acima dos quue existe, impede acesso a memória inexistente
+        salto /= 3;
+
+        for(i=salto ; i<tam ; i++){
+            auxilar = vetorPont[i];
+            j = i-salto;
+
+            while(j >= 0 && auxilar->rg < vetorPont[j]->rg){
+                vetorPont[j+salto] = vetorPont[j];
+                j -= salto;
+            }
+
+            vetorPont[j+salto] = auxilar;
+
+        }
+
+    }
 
 }

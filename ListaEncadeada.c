@@ -760,7 +760,8 @@ void mainListaEncadeada(){
                            "(2)Bubble Sort\n"
                            "(3)Insertion Sort\n"
                            "(4)Quick Sort\n"
-                           "(5)Merge Sort\n");
+                           "(5)Merge Sort\n"
+                           "(6)Shell Sort\n");
                     scanf("%d", &opcSort);
 
                     switch(opcSort){
@@ -823,6 +824,52 @@ void mainListaEncadeada(){
                                 temFuncao.temIni = time(NULL);
                                 numElementos = lista.qtdElementos-1;
                                 mergeSortEncad(&lista, vetor, 0, numElementos);
+                                //Esse for serve para arrumas todas as referencias de todos os pontos do vetor
+                                for(i=0 ; i<lista.qtdElementos ; i++){
+                                    numItera++;
+                                    if(i == 0){
+                                        numItera++;
+                                        //Muda o primeiro elemento da lista
+                                        lista.primeiro = vetor[i];
+                                        numCopias++;
+
+                                        vetor[i]->anterior = 0;
+
+                                        vetor[i]->proximo = vetor[i+1];
+                                        numCopias++;
+                                    }
+                                    else if(i == lista.qtdElementos){
+                                        numItera++;
+                                        //Muda o ultimo elemento da lista
+                                        lista.ultimo = vetor[i];
+                                        numCopias++;
+
+                                        vetor[i]->proximo = 0;
+
+                                        vetor[i]->anterior = vetor[i-1];
+                                        numCopias++;
+                                    }
+                                    else{
+                                        numItera++;
+                                        //Altera os elemento do meio
+                                        vetor[i]->anterior = vetor[i-1];
+                                        numCopias++;
+
+                                        vetor[i]->proximo = vetor[i+1];
+                                        numCopias++;
+
+                                    }
+                                }
+                                temFuncao.temFinal = time(NULL);
+                                temFuncao.tempo = difftime(temFuncao.temFinal, temFuncao.temIni);
+                                printf("\n Tempo da Funcao: %f segundos\n Numero Iteracoes:%d\n Numero Copias:%d", temFuncao.tempo, numItera, numCopias);
+                                printf("\n\n");
+                                break;
+
+                        case 6: numCopias=0; numItera=0;
+                                temFuncao.temIni = time(NULL);
+                                numElementos = lista.qtdElementos-1;
+                                shellSortEncad(&lista, vetor);
                                 //Esse for serve para arrumas todas as referencias de todos os pontos do vetor
                                 for(i=0 ; i<lista.qtdElementos ; i++){
                                     numItera++;
