@@ -75,7 +75,6 @@ void preencheListaSequencial(int *numEle, ListaPessoa **vetorPonteiros, int opcA
             strPart = strsep(&linTemp, delimit);
             strcpy(registro->nome, strPart);
             numCopias++;
-            printf("%s\n",registro->nome);
 
             /*Separa a String, pega o rg*/
             strPart = strsep(&linTemp, delimit);
@@ -496,21 +495,33 @@ void mainSequencial(){
             case 2: listaSequencial = addFinal(listaSequencial, numEle);
                     numEle++;
                     numItera++;
+                    if(ordem == 1){
+                        insertionSortSquencial(numEle, listaSequencial);
+                    }
                     break;
 
             case 3: listaSequencial = addMeio(listaSequencial, numEle);
                     numItera++;
                     numEle++;
+                    if(ordem == 1){
+                        insertionSortSquencial(numEle, listaSequencial);
+                    }
                     break;
 
             case 4: listaSequencial = addIni(listaSequencial, numEle);
                     numItera++;
                     numEle++;
+                    if(ordem == 1){
+                        insertionSortSquencial(numEle, listaSequencial);
+                    }
                     break;
 
             case 5: listaSequencial = removeItem(listaSequencial, numEle);
                     numItera++;
                     numEle--;
+                    if(ordem == 1){
+                        insertionSortSquencial(numEle, listaSequencial);
+                    }
                     break;
 
             case 6: procuraRG(listaSequencial, numEle);
