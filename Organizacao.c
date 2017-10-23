@@ -7,7 +7,7 @@
 #include "Organizacao.h"
 #include "OrganizacaoEncad.h"
 
-void selecSortSquencial(ListaHeader *lista, ListaPessoa **vetorPont){
+void selecSortSquencial(int elementos, ListaPessoa **vetorPont){
     long int i, j;//contadores para o 'for'
     ContTempo temFuncao;//Função
     ListaPessoa *pontAux;//Ponteiro auxiliar para troca de elementos
@@ -16,11 +16,11 @@ void selecSortSquencial(ListaHeader *lista, ListaPessoa **vetorPont){
     numCopias=0;
     numItera=0;
 
-    for(i=0 ; i<lista->qtdElementos ; i++){
+    for(i=0 ; i<elementos ; i++){
 
         numItera++;
 
-        for(j=0 ; j<lista->qtdElementos ; j++){
+        for(j=0 ; j<elementos ; j++){
             numItera++;
 
             if(vetorPont[j]->rg > vetorPont[i]->rg){
@@ -51,7 +51,7 @@ void selecSortSquencial(ListaHeader *lista, ListaPessoa **vetorPont){
 
 }
 
-void bubbleSortSquencial(ListaHeader *lista, ListaPessoa **vetorPont){
+void bubbleSortSquencial(int elementos, ListaPessoa **vetorPont){
 
     long int i, numAcoes = 1;// Controladores para o loops
     ListaPessoa *pontAux;//Ponteiro Auxiliar
@@ -64,10 +64,10 @@ void bubbleSortSquencial(ListaHeader *lista, ListaPessoa **vetorPont){
     while(numAcoes != 0){
         numAcoes = 0;
 
-        for(i=0; i<lista->qtdElementos ; i++){
+        for(i=0; i<elementos ; i++){
             numItera++;
 
-            if(i!=lista->qtdElementos-1 && vetorPont[i]->rg > vetorPont[i+1]->rg){
+            if(i!=elementos-1 && vetorPont[i]->rg > vetorPont[i+1]->rg){
                 numItera++;
                 numAcoes++;
 
@@ -94,7 +94,7 @@ void bubbleSortSquencial(ListaHeader *lista, ListaPessoa **vetorPont){
 
 }
 
-void insertionSortSquencial(ListaHeader *lista, ListaPessoa **vetorPont){
+void insertionSortSquencial(int elementos, ListaPessoa **vetorPont){
     long int i, j;//Controladores de loops
     ContTempo temFuncao;//Tempo da Função
     ListaPessoa *pontAux;//Ponteiro Auxiliar
@@ -103,7 +103,7 @@ void insertionSortSquencial(ListaHeader *lista, ListaPessoa **vetorPont){
     numCopias=0;
     numItera=0;
 
-    for(i=2 ; i<lista->qtdElementos ; i++){//'i' é o que secsiona os pedaços que serão avaliados
+    for(i=2 ; i<elementos ; i++){//'i' é o que secsiona os pedaços que serão avaliados
         for(j=0 ; j<i ; j++){//'j' é quem corre o vetor sendo limitado por 'i'
             if(vetorPont[i]->rg < vetorPont[j]->rg){
                 numItera++;
@@ -172,16 +172,16 @@ void quickSortSquencial(ListaPessoa **vetorPont, long int iniComp, long int fimC
     }
     //Secção baseada no 'j'
     if(j > iniComp){
-        quickSortEncad(lista, vetorPont, iniComp, j);
+        quickSortSquencial(vetorPont, iniComp, j);
     }
     //Secção baseada no 'i'
     if(i< fimComp){
-        quickSortEncad(lista, vetorPont, i, fimComp);
+        quickSortSquencial(vetorPont, i, fimComp);
     }
 
 }
 
-void mergeSortSquencial(ListaHeader *lista, ListaPessoa **vetorPont, long int iniComp, long int fimComp){
+void mergeSortSquencial(ListaPessoa **vetorPont, long int iniComp, long int fimComp){
     //Pega o meio da lista para fazer a divisão mais tarde
     long int meio, i, j, k;//Controladores de tamanho
     ListaPessoa **vetorTemp;
@@ -192,8 +192,8 @@ void mergeSortSquencial(ListaHeader *lista, ListaPessoa **vetorPont, long int in
     }
     //Enquanto foi pissível ele faz a divisão das listas
     meio = (iniComp + fimComp)/2;
-    mergeSortEncad(lista, vetorPont, iniComp, meio);
-    mergeSortEncad(lista, vetorPont, meio+1, fimComp);
+    mergeSortSquencial(vetorPont, iniComp, meio);
+    mergeSortSquencial(vetorPont, meio+1, fimComp);
 
     //Inicia variaveis
     i = iniComp;
@@ -250,13 +250,13 @@ void mergeSortSquencial(ListaHeader *lista, ListaPessoa **vetorPont, long int in
     free(vetorTemp);
 }
 
-void shellSortSquencial(ListaHeader *lista, ListaPessoa **vetorPont){
+void shellSortSquencial(int elementos, ListaPessoa **vetorPont){
     long int i, j;//Controladores
     long int salto, tam;//tamanho do salto que deve ser dado, tamanho do vetor passado
     ListaPessoa *auxilar;
 
     //inicializa variaveis
-    tam = lista->qtdElementos;
+    tam = elementos;
     salto = 1;
 
     //Esse calculo foi criado com base em um estudo, faz a divisão inicial de 'x' em 'x', sendo selecionado com base no tamanho da lista
@@ -298,7 +298,7 @@ void shellSortSquencial(ListaHeader *lista, ListaPessoa **vetorPont){
 
 }
 
-void pesquisaBinariaSquencial(ListaHeader *lista, ListaPessoa **vetorPont){
+void pesquisaBinariaSquencial(int elementos, ListaPessoa **vetorPont){
 
     long int posicao,//posição a ser avaliada
              inicio,//pisião inicial da lista ser avaliada
@@ -310,7 +310,7 @@ void pesquisaBinariaSquencial(ListaHeader *lista, ListaPessoa **vetorPont){
     scanf("%d", &rgBuscado);
 
     inicio=0;
-    fim=lista->qtdElementos-1;
+    fim=elementos-1;
 
     while(inicio <= fim){
         posicao = (fim + inicio)/2;

@@ -435,8 +435,9 @@ void salvaLista(ListaPessoa *pessoas, int arquivo, int tamList){
 
 void mainSequencial(){
 
-    int opcArq=0, opcFun=0, j, numEle=0, opcOrg;
+    int opcArq=0, opcFun=0, j, numEle=0, opcOrg, ordem=0;
     ListaPessoa **listaSequencial;
+    ContTempo temFuncao;//Função
 
     printf("Qual arquivo deve ser lido?\n"
            "(1)10 registros\n"
@@ -528,7 +529,7 @@ void mainSequencial(){
                     numItera++;
                     break;
 
-            ccase 11:numItera++;
+            case 10:numItera++;
                     printf("Qual metodo de organizacao?\n"
                            "(1)Selection Sort\n"
                            "(2)Bubble Sort\n"
@@ -539,22 +540,23 @@ void mainSequencial(){
                     scanf("%d", &opcOrg);
 
                     switch(opcOrg){
-                        case 1:selecSortEncad(&lista, vetor);
+                        case 1:selecSortSquencial(numEle, listaSequencial);
                                ordem = 1;
                                break;
 
-                        case 2:bubbleSortEncad(&lista, vetor);
+                        case 2:bubbleSortSquencial(numEle, listaSequencial);
                                ordem = 1;
                                break;
 
-                        case 3:insertionSortEncad(&lista, vetor);
+                        case 3:insertionSortSquencial(numEle, listaSequencial);
                                ordem = 1;
                                break;
 
                         case 4: numCopias=0; numItera=0;
                                 temFuncao.temIni = time(NULL);
-                                numElementos = lista.qtdElementos;
-                                quickSortEncad(&lista, vetor, 0, numElementos);
+
+                                quickSortSquencial(listaSequencial, 0, numEle);
+
                                 temFuncao.temFinal = time(NULL);
                                 temFuncao.tempo = difftime(temFuncao.temFinal, temFuncao.temIni);
                                 printf("\n Tempo da Funcao: %f segundos\n Numero Iteracoes:%d\n Numero Copias:%d", temFuncao.tempo, numItera, numCopias);
@@ -564,8 +566,9 @@ void mainSequencial(){
 
                         case 5: numCopias=0; numItera=0;
                                 temFuncao.temIni = time(NULL);
-                                numElementos = lista.qtdElementos-1;
-                                mergeSortEncad(&lista, vetor, 0, numElementos);
+
+                                mergeSortSquencial(listaSequencial, 0, numEle);
+
                                 temFuncao.temFinal = time(NULL);
                                 temFuncao.tempo = difftime(temFuncao.temFinal, temFuncao.temIni);
                                 printf("\n Tempo da Funcao: %f segundos\n Numero Iteracoes:%d\n Numero Copias:%d", temFuncao.tempo, numItera, numCopias);
@@ -575,8 +578,9 @@ void mainSequencial(){
 
                         case 6: numCopias=0; numItera=0;
                                 temFuncao.temIni = time(NULL);
-                                numElementos = lista.qtdElementos-1;
-                                shellSortEncad(&lista, vetor);
+
+                                shellSortEncad(numEle, listaSequencial);
+
                                 temFuncao.temFinal = time(NULL);
                                 temFuncao.tempo = difftime(temFuncao.temFinal, temFuncao.temIni);
                                 printf("\n Tempo da Funcao: %f segundos\n Numero Iteracoes:%d\n Numero Copias:%d", temFuncao.tempo, numItera, numCopias);
@@ -586,9 +590,11 @@ void mainSequencial(){
                     }
                     break;
 
-            case 12:numCopias=0; numItera=0;
+            case 11:numCopias=0; numItera=0;
                     temFuncao.temIni = time(NULL);
-                    pesquisaBinariaSquencial(&lista, vetor);
+
+                    pesquisaBinariaSquencial(numEle, listaSequencial);
+
                     temFuncao.temFinal = time(NULL);
                     temFuncao.tempo = difftime(temFuncao.temFinal, temFuncao.temIni);
                     printf("\n Tempo da Funcao: %f segundos\n Numero Iteracoes:%d\n Numero Copias:%d", temFuncao.tempo, numItera, numCopias);
