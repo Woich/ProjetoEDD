@@ -198,16 +198,16 @@ ListaEncad** addFinalEncad(ListaEncad **lisOper, ListaHeader *listaFim){
     int rgAdd, i;
     char nomeAdd[30];
 
-    ListaPessoa *registro, **vetorAux;
+    ListaEncad *registro, **vetorAux;
 
     //gera o vetor auxiliar que será passado de volta como retorno
-    vetorAux = malloc((fim+1) * sizeof(ListaPessoa));
+    vetorAux = malloc((listaFim->qtdElementos+1) * sizeof(ListaEncad));
 
-    registro = malloc(sizeof(ListaPessoa));
+    registro = malloc(sizeof(ListaEncad));
 
     temFuncao.temIni = time(NULL);
 
-    for(i=0 ; i<fim ; i++){
+    for(i=0 ; i<listaFim->qtdElementos ; i++){
         vetorAux[i] = lisOper[i];
         numItera++;
         numCopias++;
@@ -231,7 +231,7 @@ ListaEncad** addFinalEncad(ListaEncad **lisOper, ListaHeader *listaFim){
     numCopias++;
 
     //Add o elemento gerado em registro
-    vetorAux[fim] = registro;
+    vetorAux[listaFim->qtdElementos] = registro;
     numCopias++;
 
     temFuncao.temFinal = time(NULL);
@@ -248,12 +248,12 @@ ListaEncad** addMeioEncad(ListaEncad **lisOperMeio, ListaHeader *listaMeio){
 
     int posiNovo, cont, rgNovo;
     char nomeNovo[30];
-    ListaPessoa *registro, **vetorAux;
+    ListaEncad *registro, **vetorAux;
     ContTempo temFuncao;
 
     //Aloca memória necessária para a efetuação a adição;
-    registro = malloc(sizeof(ListaPessoa));
-    vetorAux = malloc((fimMeio+1)*sizeof(ListaPessoa));
+    registro = malloc(sizeof(ListaEncad));
+    vetorAux = malloc((listaMeio->qtdElementos+1)*sizeof(ListaEncad));
 
     temFuncao.temIni = time(NULL);
     numCopias = 0;
@@ -278,7 +278,7 @@ ListaEncad** addMeioEncad(ListaEncad **lisOperMeio, ListaHeader *listaMeio){
     registro->rg = rgNovo;
     numCopias++;
 
-    for(cont=0; cont<=fimMeio ; cont++){
+    for(cont=0; cont<=listaMeio->qtdElementos ; cont++){
 
         numItera++;
 
@@ -313,12 +313,12 @@ ListaEncad** addInicioEncad(ListaEncad **lisOperIni, ListaHeader *listaIni){
 
     int cont, rgNovo;
     char nomeNovo[30];
-    ListaPessoa *registro, **vetorAux;
+    ListaEncad *registro, **vetorAux;
     ContTempo temFuncao;
 
     //Aloca memória necessária para a efetuação a adição;
-    registro = malloc(sizeof(ListaPessoa));
-    vetorAux = malloc((fimIni+1)*sizeof(ListaPessoa));
+    registro = malloc(sizeof(ListaEncad));
+    vetorAux = malloc((listaIni->qtdElementos+1)*sizeof(ListaEncad));
 
     temFuncao.temIni = time(NULL);
     numCopias = 0;
@@ -341,7 +341,7 @@ ListaEncad** addInicioEncad(ListaEncad **lisOperIni, ListaHeader *listaIni){
 
     vetorAux[0]=registro;
 
-    for(cont=1; cont<=fimIni ; cont++){
+    for(cont=1; cont<=listaIni->qtdElementos ; cont++){
 
         vetorAux[cont]=lisOperIni[cont-1];
         numItera++;
@@ -361,11 +361,11 @@ ListaEncad** addInicioEncad(ListaEncad **lisOperIni, ListaHeader *listaIni){
 ListaEncad** removeEncad(ListaEncad **lisOperRemove, ListaHeader *listaRemove){
 
     int cont, posiRemove;
-    ListaPessoa **vetorAux;
+    ListaEncad **vetorAux;
     ContTempo temFuncao;
 
     //Aloca memória necessária para a efetuação a adição;
-    vetorAux = malloc((fimRemove-1)*sizeof(ListaPessoa));
+    vetorAux = malloc((listaRemove->qtdElementos-1)*sizeof(ListaEncad));
 
     temFuncao.temIni = time(NULL);
     numCopias = 0;
@@ -376,7 +376,7 @@ ListaEncad** removeEncad(ListaEncad **lisOperRemove, ListaHeader *listaRemove){
     scanf("%i", &posiRemove);
     getchar();
 
-    for(cont=0; cont<fimRemove ; cont++){
+    for(cont=0; cont<listaRemove->qtdElementos ; cont++){
         numItera++;
 
         if(cont == posiRemove-1){
@@ -600,7 +600,7 @@ void mainListaEncadeada(){
                "(09) Numero de IF'S\n"
                "(10) Numero de Copias\n"
                "(11) Organizar\n"
-               "(12) Organizar\n"
+               "(12) Pesquisa Binaria\n"
                "(-1) Sair\n");
 
         scanf("%i", &opcAcao);
@@ -612,20 +612,168 @@ void mainListaEncadeada(){
                     numItera++;
                     break;
 
-            case 2: addFinalEncad(&lista, vetor);
+            case 2: vetor = addFinalEncad(vetor, &lista);
                     numItera++;
+                    lista.qtdElementos++;
+                    //Esse for serve para arrumas todas as referencias de todos os pontos do vetor
+                    for(i=0 ; i<lista.qtdElementos ; i++){
+                        numItera++;
+                        if(i == 0){
+                            numItera++;
+                            //Muda o primeiro elemento da lista
+                            lista.primeiro = vetor[i];
+                            numCopias++;
+
+                            vetor[i]->anterior = 0;
+
+                            vetor[i]->proximo = vetor[i+1];
+                            numCopias++;
+                        }
+                        else if(i == lista.qtdElementos){
+                            numItera++;
+                            //Muda o ultimo elemento da lista
+                            lista.ultimo = vetor[i];
+                            numCopias++;
+
+                            vetor[i]->proximo = 0;
+
+                            vetor[i]->anterior = vetor[i-1];
+                            numCopias++;
+                            }
+                            else{
+                            numItera++;
+                            //Altera os elemento do meio
+                            vetor[i]->anterior = vetor[i-1];
+                            numCopias++;
+
+                            vetor[i]->proximo = vetor[i+1];
+                            numCopias++;
+
+                            }
+                    }
                     break;
 
-            case 3: addMeioEncad(&lista, vetor);
+            case 3: vetor = addMeioEncad(vetor, &lista);
                     numItera++;
+                    lista.qtdElementos++;
+                    //Esse for serve para arrumas todas as referencias de todos os pontos do vetor
+                    for(i=0 ; i<lista.qtdElementos ; i++){
+                        numItera++;
+                        if(i == 0){
+                            numItera++;
+                            //Muda o primeiro elemento da lista
+                            lista.primeiro = vetor[i];
+                            numCopias++;
+
+                            vetor[i]->anterior = 0;
+
+                            vetor[i]->proximo = vetor[i+1];
+                            numCopias++;
+                        }
+                        else if(i == lista.qtdElementos){
+                            numItera++;
+                            //Muda o ultimo elemento da lista
+                            lista.ultimo = vetor[i];
+                            numCopias++;
+
+                            vetor[i]->proximo = 0;
+
+                            vetor[i]->anterior = vetor[i-1];
+                            numCopias++;
+                            }
+                            else{
+                            numItera++;
+                            //Altera os elemento do meio
+                            vetor[i]->anterior = vetor[i-1];
+                            numCopias++;
+
+                            vetor[i]->proximo = vetor[i+1];
+                            numCopias++;
+
+                            }
+                    }
                     break;
 
-            case 4: addInicioEncad(&lista, vetor);
+            case 4: vetor = addInicioEncad(vetor, &lista);
                     numItera++;
+                    lista.qtdElementos++;
+                    //Esse for serve para arrumas todas as referencias de todos os pontos do vetor
+                    for(i=0 ; i<lista.qtdElementos ; i++){
+                        numItera++;
+                        if(i == 0){
+                            numItera++;
+                            //Muda o primeiro elemento da lista
+                            lista.primeiro = vetor[i];
+                            numCopias++;
+
+                            vetor[i]->anterior = 0;
+
+                            vetor[i]->proximo = vetor[i+1];
+                            numCopias++;
+                        }
+                        else if(i == lista.qtdElementos){
+                            numItera++;
+                            //Muda o ultimo elemento da lista
+                            lista.ultimo = vetor[i];
+                            numCopias++;
+
+                            vetor[i]->proximo = 0;
+
+                            vetor[i]->anterior = vetor[i-1];
+                            numCopias++;
+                            }
+                            else{
+                            numItera++;
+                            //Altera os elemento do meio
+                            vetor[i]->anterior = vetor[i-1];
+                            numCopias++;
+
+                            vetor[i]->proximo = vetor[i+1];
+                            numCopias++;
+
+                            }
+                    }
                     break;
 
-            case 5: removeEncad(&lista, vetor);
+            case 5: vetor = removeEncad(vetor, &lista);
                     numItera++;
+                    lista.qtdElementos--;
+                    //Esse for serve para arrumas todas as referencias de todos os pontos do vetor
+                    for(i=0 ; i<lista.qtdElementos ; i++){
+                        numItera++;
+                        if(i == 0){
+                            numItera++;
+                            //Muda o primeiro elemento da lista
+                            lista.primeiro = vetor[i];
+                            numCopias++;
+
+                            vetor[i]->anterior = 0;
+
+                            vetor[i]->proximo = vetor[i+1];
+                            numCopias++;
+                        }
+                        else if(i == lista.qtdElementos){
+                            numItera++;
+                            //Muda o ultimo elemento da lista
+                            lista.ultimo = vetor[i];
+                            numCopias++;
+
+                            vetor[i]->proximo = 0;
+
+                            vetor[i]->anterior = vetor[i-1];
+                            numCopias++;
+                            }
+                            else{
+                            numItera++;
+                            //Altera os elemento do meio
+                            vetor[i]->anterior = vetor[i-1];
+                            numCopias++;
+
+                            vetor[i]->proximo = vetor[i+1];
+                            numCopias++;
+
+                            }
+                    }
                     break;
 
             case 6: pesquisaEncad(&lista);
