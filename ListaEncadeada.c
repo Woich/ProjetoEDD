@@ -190,198 +190,219 @@ void imprimeEncad(ListaHeader *lista, ListaEncad **vetorPonteiros){
 
 }
 
-void addFinalEncad(ListaHeader *lista, ListaEncad **vetorPonteiros){
-    char nome[30];
-    int rg;
+ListaEncad** addFinalEncad(ListaEncad **lisOper, ListaHeader *listaFim){
+    numCopias = 0;
+    numItera = 0;
 
-    numCopias=0;
-    numItera=0;
-
-    ListaEncad *registro;
     ContTempo temFuncao;
+    int rgAdd, i;
+    char nomeAdd[30];
+
+    ListaPessoa *registro, **vetorAux;
+
+    //gera o vetor auxiliar que será passado de volta como retorno
+    vetorAux = malloc((fim+1) * sizeof(ListaPessoa));
+
+    registro = malloc(sizeof(ListaPessoa));
 
     temFuncao.temIni = time(NULL);
 
-    printf("\nQual o Nome?\n");
-    scanf("%s", nome);
-    getchar();
-    printf("\nQual o RG?\n");
-    scanf("%d", &rg);
-    getchar();
-
-
-    /* Aloca a Memória necessária */
-    registro = malloc(sizeof(ListaEncad));
-
-    /*Separa a String, pega o nome*/
-    strcpy(registro->nome, nome);
-    numCopias++;
-
-    /*Separa a String, pega o rg*/
-    registro->rg = rg;
-    numCopias++;
-
-    /*Altera a quantidade de elementos*/
-    lista->qtdElementos = lista->qtdElementos+1;
-    numCopias++;
-
-    /*Pega o anterior, altera o anterior para ele ter esse como próximo*/
-    registro->anterior = lista->ultimo;
-    numCopias++;
-    registro->anterior->proximo = registro;
-    numCopias++;
-
-    /*Altera o ponteiro para o ultimo valor*/
-    lista->ultimo = registro;
-    numCopias++;
-
-    vetorPonteiros = realloc(vetorPonteiros, (lista->qtdElementos * sizeof(ListaEncad)));
-    vetorPonteiros[lista->qtdElementos-1] = registro;
-    numCopias++;
-
-    temFuncao.temFinal = time(NULL);
-    temFuncao.tempo = difftime(temFuncao.temFinal, temFuncao.temIni);
-    printf("\n Tempo da Funcao: %f segundos\n Numero Iteracoes:%d\n Numero Copias:%d", temFuncao.tempo, numItera, numCopias);
-    printf("\n\n");
-}
-
-void addMeioEncad(ListaHeader *lista, ListaEncad **vetorPonteiros){
-
-    char nome[30];
-    int rg, posicao;
-    long int i;
-
-    numCopias=0;
-    numItera=0;
-
-    ListaEncad *registro, *auxAnterior, *auxProximo;
-
-    ContTempo temFuncao;
-
-    temFuncao.temIni = time(NULL);
-
-    printf("\nQual a Posicao?\n");
-    scanf("%i", &posicao);
-    getchar();
-
-    printf("\nQual o Nome?\n");
-    scanf("%s", nome);
-    getchar();
-
-    printf("\nQual o RG?\n");
-    scanf("%i", &rg);
-    getchar();
-
-    auxAnterior = lista->primeiro;
-
-    registro = malloc(sizeof(ListaEncad));
-    lista->qtdElementos = lista->qtdElementos+1;
-
-    //Arruma a quantidade de itens no vetor
-    vetorPonteiros = realloc(vetorPonteiros, (lista->qtdElementos * sizeof(ListaEncad)));
-
-    //Adiciona os valores para  o registro
-    strcpy(registro->nome, nome);
-    numCopias++;
-    registro->rg = rg;
-    numCopias++;
-
-    //Arruma posição
-    auxAnterior = vetorPonteiros[posicao-2];
-    numCopias++;
-    auxProximo = vetorPonteiros[posicao-1];
-    numCopias++;
-
-    for(i=lista->qtdElementos ; i>posicao ; i--){
-        vetorPonteiros[i-1] = vetorPonteiros[i-2];
+    for(i=0 ; i<fim ; i++){
+        vetorAux[i] = lisOper[i];
         numItera++;
         numCopias++;
     }
 
-    //Adiciona Referencias ao registro
-    registro->proximo =  auxProximo;
+    /*Pega o nome a tribui ao elemento do Vetor*/
+    printf("Digite o nome:\n");
+    scanf("%s",nomeAdd);
+    getchar();
+    /*Pega o rg a tribui ao elemento do Vetor*/
+    printf("Digite o RG:\n");
+    scanf("%i", &rgAdd);
+    getchar();
+
+    //Faz as cópias para registro
+    strcpy(registro->nome, nomeAdd);
+    printf("%s\n", registro->nome);
     numCopias++;
-    registro->anterior = auxAnterior;
+    registro->rg = rgAdd;
+    printf("%d\n", registro->rg);
     numCopias++;
 
-    //Arruma posições a volta
-    auxAnterior->proximo = registro;
-    numCopias++;
-    auxProximo->anterior = registro;
-    numCopias++;
-
-    //Adiciona elemento no vetor
-    vetorPonteiros[posicao-1] = registro;
+    //Add o elemento gerado em registro
+    vetorAux[fim] = registro;
     numCopias++;
 
     temFuncao.temFinal = time(NULL);
     temFuncao.tempo = difftime(temFuncao.temFinal, temFuncao.temIni);
     printf("\n Tempo da Funcao: %f segundos\n Numero Iteracoes:%d\n Numero Copias:%d", temFuncao.tempo, numItera, numCopias);
     printf("\n\n");
+
+    free(lisOper);
+    return vetorAux;
 
 }
 
-void addInicioEncad(ListaHeader *lista, ListaEncad **vetorPonteiros){
+ListaEncad** addMeioEncad(ListaEncad **lisOperMeio, ListaHeader *listaMeio){
 
-    char nome[30];
-    int rg;
-    long int i;
-
-    ListaEncad *registro;
+    int posiNovo, cont, rgNovo;
+    char nomeNovo[30];
+    ListaPessoa *registro, **vetorAux;
     ContTempo temFuncao;
 
+    //Aloca memória necessária para a efetuação a adição;
+    registro = malloc(sizeof(ListaPessoa));
+    vetorAux = malloc((fimMeio+1)*sizeof(ListaPessoa));
+
     temFuncao.temIni = time(NULL);
+    numCopias = 0;
+    numItera = 0;
 
-    printf("\nQual o Nome?\n");
-    scanf("%s", nome);
+    /*Pega o local que será adicionado*/
+    printf("Qual a posicao?\n");
+    scanf("%i",&posiNovo);
+
+    /*Pega o nome a tribui ao elemento do Vetor*/
+    printf("Digite o nome:\n");
+    scanf("%s", nomeNovo);
+
+    /*Pega o rg a tribui ao elemento do Vetor*/
+    printf("Digite o RG:\n");
+    scanf("%i", &rgNovo);
     getchar();
-    printf("\nQual o RG?\n");
-    scanf("%d", &rg);
-    getchar();
 
-
-    /* Aloca a Memória necessária */
-    registro = malloc(sizeof(ListaEncad));
-    lista->qtdElementos= lista->qtdElementos+1;
-
-    vetorPonteiros = realloc(vetorPonteiros, lista->qtdElementos);
-
-    /*Separa a String, pega o nome*/
-    strcpy(registro->nome, nome);
+    strcpy(registro->nome, nomeNovo);
     numCopias++;
 
-    /*Separa a String, pega o rg*/
-    registro->rg = rg;
+    registro->rg = rgNovo;
     numCopias++;
 
-    //Desce todos os elementos
-    for(i=lista->qtdElementos ; i>0 ; i--){
-        vetorPonteiros[i] = vetorPonteiros[i-1];
-        numCopias++;
+    for(cont=0; cont<=fimMeio ; cont++){
+
         numItera++;
+
+        if(cont < posiNovo-1){
+            vetorAux[cont]=lisOperMeio[cont];
+            numItera++;
+            numCopias++;
+        }
+        else if(cont == posiNovo-1){
+            vetorAux[cont] = registro;
+            numItera++;
+            numCopias++;
+        }
+        else{
+            vetorAux[cont]=lisOperMeio[cont-1];
+            numItera++;
+            numCopias++;
+        }
     }
-
-    //Adiciona o elemento no vetor
-    vetorPonteiros[0] = registro;
-    numCopias++;
-
-    //Arruma referencias do elemento
-    registro->anterior = 0;
-    registro->proximo = vetorPonteiros[1];
-    numCopias++;
-
-    //Arruma referencias da lista
-    vetorPonteiros[1]->anterior = vetorPonteiros[0];
-    numCopias++;
-    lista->primeiro = vetorPonteiros[0];
-    numCopias++;
-
 
     temFuncao.temFinal = time(NULL);
     temFuncao.tempo = difftime(temFuncao.temFinal, temFuncao.temIni);
     printf("\n Tempo da Funcao: %f segundos\n Numero Iteracoes:%d\n Numero Copias:%d", temFuncao.tempo, numItera, numCopias);
     printf("\n\n");
 
+    free(lisOperMeio);
+    return vetorAux;
+
+}
+
+ListaEncad** addInicioEncad(ListaEncad **lisOperIni, ListaHeader *listaIni){
+
+    int cont, rgNovo;
+    char nomeNovo[30];
+    ListaPessoa *registro, **vetorAux;
+    ContTempo temFuncao;
+
+    //Aloca memória necessária para a efetuação a adição;
+    registro = malloc(sizeof(ListaPessoa));
+    vetorAux = malloc((fimIni+1)*sizeof(ListaPessoa));
+
+    temFuncao.temIni = time(NULL);
+    numCopias = 0;
+    numItera = 0;
+
+    /*Pega o nome a tribui ao elemento do Vetor*/
+    printf("Digite o nome:\n");
+    scanf("%s", nomeNovo);
+
+    /*Pega o rg a tribui ao elemento do Vetor*/
+    printf("Digite o RG:\n");
+    scanf("%i", &rgNovo);
+    getchar();
+
+    strcpy(registro->nome, nomeNovo);
+    numCopias++;
+
+    registro->rg = rgNovo;
+    numCopias++;
+
+    vetorAux[0]=registro;
+
+    for(cont=1; cont<=fimIni ; cont++){
+
+        vetorAux[cont]=lisOperIni[cont-1];
+        numItera++;
+        numCopias++;
+
+    }
+
+    temFuncao.temFinal = time(NULL);
+    temFuncao.tempo = difftime(temFuncao.temFinal, temFuncao.temIni);
+    printf("\n Tempo da Funcao: %f segundos\n Numero Iteracoes:%d\n Numero Copias:%d", temFuncao.tempo, numItera, numCopias);
+    printf("\n\n");
+
+    free(lisOperIni);
+    return vetorAux;
+}
+
+ListaEncad** removeEncad(ListaEncad **lisOperRemove, ListaHeader *listaRemove){
+
+    int cont, posiRemove;
+    ListaPessoa **vetorAux;
+    ContTempo temFuncao;
+
+    //Aloca memória necessária para a efetuação a adição;
+    vetorAux = malloc((fimRemove-1)*sizeof(ListaPessoa));
+
+    temFuncao.temIni = time(NULL);
+    numCopias = 0;
+    numItera = 0;
+
+    /*Pega o rg a tribui ao elemento do Vetor*/
+    printf("Qual posicao a ser removida?:\n");
+    scanf("%i", &posiRemove);
+    getchar();
+
+    for(cont=0; cont<fimRemove ; cont++){
+        numItera++;
+
+        if(cont == posiRemove-1){
+            continue;
+            numItera++;
+        }
+        else if(cont < posiRemove-1){
+            vetorAux[cont]=lisOperRemove[cont];
+            numItera++;
+            numCopias++;
+        }
+        else{
+            vetorAux[cont-1]=lisOperRemove[cont];
+            numItera++;
+            numCopias++;
+        }
+
+    }
+
+    temFuncao.temFinal = time(NULL);
+    temFuncao.tempo = difftime(temFuncao.temFinal, temFuncao.temIni);
+    printf("\n Tempo da Funcao: %f segundos\n Numero Iteracoes:%d\n Numero Copias:%d", temFuncao.tempo, numItera, numCopias);
+    printf("\n\n");
+
+    free(lisOperRemove);
+    return vetorAux;
 }
 
 void pesquisaEncad(ListaHeader *lista){
@@ -479,134 +500,6 @@ void pesquisaEncad(ListaHeader *lista){
     temFuncao.tempo = difftime(temFuncao.temFinal, temFuncao.temIni);
     printf("\n Tempo da Funcao: %f segundos\n Numero Iteracoes:%d\n Numero Copias:%d", temFuncao.tempo, numItera, numCopias);
     printf("\n\n");
-
-}
-
-void removeEncad(ListaHeader *lista, ListaEncad **vetorPonteiros){
-
-    int posicao;
-    long int i;
-
-    ListaEncad *registro, *auxAnterior, *auxProximo;
-
-    ContTempo temFuncao;
-
-    temFuncao.temIni = time(NULL);
-
-    printf("\nQual a Posicao?\n");
-    scanf("%d", &posicao);
-    getchar();
-
-    numCopias = 0;
-    numItera = 0;
-
-    registro = lista->primeiro;
-    if(posicao == 1){
-        numItera++;
-
-        /*encontra a referencia e atribui para as variaveir*/
-        registro = lista->primeiro;
-        numCopias++;
-
-        auxProximo = registro->proximo;
-        numCopias++;
-
-        /*Altera referencia do próximo*/
-        auxProximo->anterior = NULL;
-
-        /*Altera referencia do primeiro item*/
-        lista->primeiro = auxProximo;
-        numCopias++;
-
-        //Altera o vetor para que ele fique correto
-        for(i=0 ; i<lista->qtdElementos ; i++){
-
-            if(vetorPonteiros[i]->rg != lista->ultimo->rg){
-
-                vetorPonteiros[i] = vetorPonteiros[i+1];
-                numCopias++;
-                numItera++;
-            }
-
-        }
-
-        /*Libera memoria*/
-        free(registro);
-        vetorPonteiros = realloc(vetorPonteiros, sizeof(ListaEncad) * (lista->qtdElementos-1));
-    }
-
-    else if(posicao == lista->qtdElementos){
-        numItera++;
-
-        registro = lista->ultimo;
-        numCopias++;
-
-        auxAnterior = registro->anterior;
-        numCopias++;
-
-        /*Altera referencia do próximo*/
-        auxAnterior->proximo = NULL;
-
-        /*Altera referencia do primeiro item*/
-        lista->ultimo = auxAnterior;
-        numCopias++;
-
-        /*Libera memoria*/
-        free(registro);
-        vetorPonteiros = realloc(vetorPonteiros, sizeof(ListaEncad) * (lista->qtdElementos-1));
-    }
-    else{
-        numItera++;
-        for(i=1 ; i<posicao ; i++){
-         numItera++;
-            /*Corre a lista para encontrar a posição a ser adicionada*/
-            registro = registro->proximo;
-            numCopias++;
-        }
-
-        /*Pega as referencias dos elementos que estão em torno do que será removido*/
-        auxAnterior = registro->anterior;
-        numCopias++;
-
-        auxProximo = registro->proximo;
-        numCopias++;
-
-        /*Arruma as referencias da lista*/
-        auxAnterior->proximo = auxProximo;
-        numCopias++;
-
-        auxProximo->anterior = auxAnterior;
-        numCopias++;
-
-        //Altera o vetor para que ele fique correto
-        for(i=posicao-1 ; i<lista->qtdElementos ; i++){
-            numItera++;
-
-            if(vetorPonteiros[i]->rg != lista->ultimo->rg){
-
-                vetorPonteiros[i] = vetorPonteiros[i+1];
-                numCopias++;
-                numItera++;
-            }
-
-        }
-
-        /*Libera a memória em uso*/
-        free(registro);
-        vetorPonteiros = realloc(vetorPonteiros, sizeof(ListaEncad) * (lista->qtdElementos-1));
-
-
-    }
-
-    /*Altera a quantidade de elementos*/
-    lista->qtdElementos = lista->qtdElementos-1;
-
-    temFuncao.temFinal = time(NULL);
-    temFuncao.tempo = difftime(temFuncao.temFinal, temFuncao.temIni);
-    printf("\n Tempo da Funcao: %f segundos\n Numero Iteracoes:%d\n Numero Copias:%d", temFuncao.tempo, numItera, numCopias);
-    printf("\n\n");
-
-
 
 }
 

@@ -25,11 +25,11 @@ int numItera, numCopias;
 
 void preencheLista(ListaHeader *listaGerada, ListaEncad **vetorPonteiros, int opcArq);
 void imprimeEncad(ListaHeader *lista, ListaEncad **vetorPonteiros);
-void addFinalEncad(ListaHeader *lista, ListaEncad **vetorPonteiros);
-void addMeioEncad(ListaHeader *lista, ListaEncad **vetorPonteiros);
-void addInicioEncad(ListaHeader *lista, ListaEncad **vetorPonteiros);
+ListaEncad** addFinalEncad(ListaEncad **lisOper, ListaHeader *listaFim);
+ListaEncad** addMeioEncad(ListaEncad **lisOperMeio, ListaHeader *listaMeio);
+ListaEncad** addInicioEncad(ListaEncad **lisOperIni, ListaHeader *listaIni);
+ListaEncad** removeEncad(ListaEncad **lisOperRemove, ListaHeader *listaRemove);
 void pesquisaEncad(ListaHeader *lista);
-void removeEncad(ListaHeader *lista, ListaEncad **vetorPonteiros);
 void salvaEncad(ListaHeader *lista);
 void mainListaEncadeada();
 

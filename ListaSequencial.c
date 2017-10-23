@@ -191,7 +191,6 @@ ListaPessoa** addFinal(ListaPessoa **lisOper, int fim){
 }
 
 ListaPessoa** addMeio(ListaPessoa **lisOperMeio, int fimMeio){
-    numCopias++;/*Contador somado para cada cópia feita na função*/
 
     int posiNovo, cont, rgNovo;
     char nomeNovo[30];
@@ -203,6 +202,8 @@ ListaPessoa** addMeio(ListaPessoa **lisOperMeio, int fimMeio){
     vetorAux = malloc((fimMeio+1)*sizeof(ListaPessoa));
 
     temFuncao.temIni = time(NULL);
+    numCopias = 0;
+    numItera = 0;
 
     /*Pega o local que será adicionado*/
     printf("Qual a posicao?\n");
@@ -229,19 +230,16 @@ ListaPessoa** addMeio(ListaPessoa **lisOperMeio, int fimMeio){
 
         if(cont < posiNovo-1){
             vetorAux[cont]=lisOperMeio[cont];
-            printf("%s,%d\n", vetorAux[cont]->nome, vetorAux[cont]->rg);
             numItera++;
             numCopias++;
         }
         else if(cont == posiNovo-1){
             vetorAux[cont] = registro;
-            printf("%s,%d\n", vetorAux[cont]->nome, vetorAux[cont]->rg);
             numItera++;
             numCopias++;
         }
         else{
             vetorAux[cont]=lisOperMeio[cont-1];
-            printf("%s,%d\n", vetorAux[cont]->nome, vetorAux[cont]->rg);
             numItera++;
             numCopias++;
         }
@@ -258,45 +256,99 @@ ListaPessoa** addMeio(ListaPessoa **lisOperMeio, int fimMeio){
 }
 
 ListaPessoa** addIni(ListaPessoa **lisOperIni, int fimIni){
-    numCopias++;/*Contador somado para cada cópia feita na função*/
 
-    int  cont;
+    int cont, rgNovo;
     char nomeNovo[30];
+    ListaPessoa *registro, **vetorAux;
     ContTempo temFuncao;
 
+    //Aloca memória necessária para a efetuação a adição;
+    registro = malloc(sizeof(ListaPessoa));
+    vetorAux = malloc((fimIni+1)*sizeof(ListaPessoa));
+
     temFuncao.temIni = time(NULL);
+    numCopias = 0;
+    numItera = 0;
 
     /*Pega o nome a tribui ao elemento do Vetor*/
     printf("Digite o nome:\n");
     scanf("%s", nomeNovo);
-    numCopias++;
 
     /*Pega o rg a tribui ao elemento do Vetor*/
     printf("Digite o RG:\n");
+    scanf("%i", &rgNovo);
     getchar();
+
+    strcpy(registro->nome, nomeNovo);
+    numCopias++;
+
+    registro->rg = rgNovo;
+    numCopias++;
+
+    vetorAux[0]=registro;
+
+    for(cont=1; cont<=fimIni ; cont++){
+
+        vetorAux[cont]=lisOperIni[cont-1];
+        numItera++;
+        numCopias++;
+
+    }
 
     temFuncao.temFinal = time(NULL);
     temFuncao.tempo = difftime(temFuncao.temFinal, temFuncao.temIni);
-    printf("\n Tempo da Funcao: %f segundos\n\n", temFuncao.tempo);
+    printf("\n Tempo da Funcao: %f segundos\n Numero Iteracoes:%d\n Numero Copias:%d", temFuncao.tempo, numItera, numCopias);
+    printf("\n\n");
+
+    free(lisOperIni);
+    return vetorAux;
 }
 
 ListaPessoa** removeItem(ListaPessoa **lisOperRemove, int fimRemove){
-    numCopias++;/*Contador somado para cada cópia feita na função*/
 
-    int posiRem, cont;
+    int cont, posiRemove;
+    ListaPessoa **vetorAux;
     ContTempo temFuncao;
 
-    temFuncao.temIni = time(NULL);
+    //Aloca memória necessária para a efetuação a adição;
+    vetorAux = malloc((fimRemove-1)*sizeof(ListaPessoa));
 
-    /*Pega a posição que será removida*/
-    printf("Qual a posicao?\n");
-    scanf("%d",&posiRem);
+    temFuncao.temIni = time(NULL);
+    numCopias = 0;
+    numItera = 0;
+
+    /*Pega o rg a tribui ao elemento do Vetor*/
+    printf("Qual posicao a ser removida?:\n");
+    scanf("%i", &posiRemove);
+    getchar();
+
+    for(cont=0; cont<fimRemove ; cont++){
+        numItera++;
+
+        if(cont == posiRemove-1){
+            continue;
+            numItera++;
+        }
+        else if(cont < posiRemove-1){
+            vetorAux[cont]=lisOperRemove[cont];
+            numItera++;
+            numCopias++;
+        }
+        else{
+            vetorAux[cont-1]=lisOperRemove[cont];
+            numItera++;
+            numCopias++;
+        }
+
+    }
 
     temFuncao.temFinal = time(NULL);
     temFuncao.tempo = difftime(temFuncao.temFinal, temFuncao.temIni);
-    printf("\n Tempo da Funcao: %f segundos\n\n", temFuncao.tempo);
+    printf("\n Tempo da Funcao: %f segundos\n Numero Iteracoes:%d\n Numero Copias:%d", temFuncao.tempo, numItera, numCopias);
+    printf("\n\n");
 
-
+    free(lisOperRemove);
+    return vetorAux;
 }
 
 void imprimeLista(long int fim, ListaPessoa **vetorPonteiros){
