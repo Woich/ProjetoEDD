@@ -7,7 +7,7 @@ typedef struct listapessoa{
 }ListaPessoa;
 
 
-void addFinal(ListaPessoa *lisOper, int fim);
+void addFinal(ListaPessoa **lisOper, int *fim);
 void addMeio(ListaPessoa *lisOper, int fim);
 void addIni(ListaPessoa *lisOper, int fim);
 void removeItem(ListaPessoa *lisOper, int fim);

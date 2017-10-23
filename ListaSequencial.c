@@ -7,7 +7,7 @@
 #include "Organizacao.h"
 #include "OrganizacaoEncad.h"
 
-void preencheListaSequencial(ListaHeader *listaGerada, ListaPessoa **vetorPonteiros, int opcArq){
+void preencheListaSequencial(int *numEle, ListaPessoa **vetorPonteiros, int opcArq){
 
     ContTempo temFuncao;
     FILE *file;
@@ -59,7 +59,7 @@ void preencheListaSequencial(ListaHeader *listaGerada, ListaPessoa **vetorPontei
     for(i=0; i<numRegistros ; i++){
         numItera++;
 
-        if(listaGerada->qtdElementos == 0){
+        if(*numEle == 0){
             numItera++;
 
             //Aloca Memoria
@@ -84,13 +84,7 @@ void preencheListaSequencial(ListaHeader *listaGerada, ListaPessoa **vetorPontei
 
 
             //Arruma a lista
-            listaGerada->qtdElementos = listaGerada->qtdElementos+1;
-
-            listaGerada->primeiro = registro;
-            numCopias++;
-
-            listaGerada->ultimo = registro;
-            numCopias++;
+            *numEle = *numEle+1;
 
             //Adiciona no vetor de ponteiros;
             vetorPonteiros[0] = registro;
@@ -120,10 +114,7 @@ void preencheListaSequencial(ListaHeader *listaGerada, ListaPessoa **vetorPontei
 
 
             //Arruma a lista
-            listaGerada->qtdElementos = listaGerada->qtdElementos+1;
-
-            listaGerada->ultimo = registro;
-            numCopias++;
+            *numEle = *numEle+1;
 
             //Adiciona no vetor de ponteiros;
             vetorPonteiros[i] = registro;
@@ -145,25 +136,44 @@ void preencheListaSequencial(ListaHeader *listaGerada, ListaPessoa **vetorPontei
 
 }
 
-void addFinal(ListaPessoa *lisOper, int fim){
-    numCopias++;/*Contador somado para cada cópia feita na função*/
+void addFinal(ListaPessoa **lisOper, int *fim){
+    numCopias = 0;
+    numItera = 0;
 
     ContTempo temFuncao;
+    int rgAdd;
+    char nomeAdd[30];
+
+    ListaPessoa *registro = malloc(sizeof(ListaPessoa));
 
     temFuncao.temIni = time(NULL);
 
     /*Pega o nome a tribui ao elemento do Vetor*/
     printf("Digite o nome:\n");
-    scanf("%s",lisOper[fim].nome);
+    scanf("%s",nomeAdd);
     getchar();
     /*Pega o rg a tribui ao elemento do Vetor*/
     printf("Digite o RG:\n");
-    scanf("%i", &lisOper[fim].rg);
+    scanf("%i", &rgAdd);
     getchar();
+
+    //Faz as cópias para registro
+    strcpy(registro->nome, nomeAdd);
+    numCopias++;
+    registro->rg = rgAdd;
+    numCopias++;
+
+    //Realoca a memória necessária
+    lisOper = realloc(lisOper, (*fim+1)*sizeof(ListaPessoa));
+    //Add o elemento gerado em registro
+    lisOper[*fim] = registro;
+    //Adiciona mais um elemento no calculo
+    *fim = *fim+1;
 
     temFuncao.temFinal = time(NULL);
     temFuncao.tempo = difftime(temFuncao.temFinal, temFuncao.temIni);
-    printf("\n Tempo da Funcao: %f segundos\n\n", temFuncao.tempo);
+    printf("\n Tempo da Funcao: %f segundos\n Numero Iteracoes:%d\n Numero Copias:%d", temFuncao.tempo, numItera, numCopias);
+    printf("\n\n");
 
 }
 
@@ -361,11 +371,6 @@ void mainSequencial(){
 
     int opcArq=0, opcFun=0, j, numEle=0;
     ListaPessoa **listaSequencial;
-    ListaHeader listaSeq;
-
-    listaSeq.primeiro=0;
-    listaSeq.ultimo=0;
-    listaSeq.qtdElementos=0;
 
     printf("Qual arquivo deve ser lido?\n"
            "(1)10 registros\n"
@@ -394,7 +399,7 @@ void mainSequencial(){
                 break;
     }
 
-    preencheListaSequencial(&listaSeq,listaSequencial, opcArq);
+    preencheListaSequencial(&numEle,listaSequencial, opcArq);
 
     /*Menu de opções*/
     while(opcFun != -1){
@@ -414,14 +419,13 @@ void mainSequencial(){
         getchar();
 
         switch(opcFun){
-            case 1: imprimeLista(listaSequencial, listaSeq.qtdElementos);
+            case 1: imprimeLista(listaSequencial, numEle);
                     numItera++;
                     printf("\n\n");
                     break;
 
-            case 2: addFinal(listaSequencial, numEle);
+            case 2: addFinal(listaSequencial, &numEle);
                     numItera++;
-                    numEle++;
                     break;
 
             case 3: addMeio(listaSequencial, numEle);
