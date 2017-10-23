@@ -471,15 +471,17 @@ void mainSequencial(){
     while(opcFun != -1){
 
         printf("Qual a funcao?\n"
-               "(1) Imprimir Lista\n"
-               "(2) Adicionar no Final\n"
-               "(3) Adicionar no Meio\n"
-               "(4) Adicionar no Inicio\n"
-               "(5) Remover Item\n"
-               "(6) Pesquisar RG\n"
-               "(7) Salvar Arquivo\n"
-               "(8) Número de IF'S\n"
-               "(9) Número de Copias\n"
+               "(01) Imprimir Lista\n"
+               "(02) Adicionar no Final\n"
+               "(03) Adicionar no Meio\n"
+               "(04) Adicionar no Inicio\n"
+               "(05) Remover Item\n"
+               "(06) Pesquisar RG\n"
+               "(07) Salvar Arquivo\n"
+               "(08) Número de IF'S\n"
+               "(09) Número de Copias\n"
+               "(10) Número de Copias\n"
+               "(11) Número de Copias\n"
                "(-1) Sair\n");
         scanf("%i", &opcFun);
         getchar();

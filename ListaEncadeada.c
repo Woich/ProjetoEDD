@@ -545,7 +545,7 @@ void mainListaEncadeada(){
 
     ListaHeader lista;
     ListaEncad **vetor;
-    int opcAcao = 0, i, opcArq, opcSort;
+    int opcAcao = 0, i, opcArq, opcSort, ordem=0;
     long int numRegistros, numElementos;
     ContTempo temFuncao;
 
@@ -651,6 +651,9 @@ void mainListaEncadeada(){
 
                             }
                     }
+                    if(ordem == 1){
+                        insertionSortEncad(&lista, vetor);
+                    }
                     break;
 
             case 3: vetor = addMeioEncad(vetor, &lista);
@@ -691,6 +694,9 @@ void mainListaEncadeada(){
                             numCopias++;
 
                             }
+                    }
+                    if(ordem == 1){
+                        insertionSortEncad(&lista, vetor);
                     }
                     break;
 
@@ -733,6 +739,9 @@ void mainListaEncadeada(){
 
                             }
                     }
+                    if(ordem == 1){
+                        insertionSortEncad(&lista, vetor);
+                    }
                     break;
 
             case 5: vetor = removeEncad(vetor, &lista);
@@ -774,6 +783,9 @@ void mainListaEncadeada(){
 
                             }
                     }
+                    if(ordem == 1){
+                        insertionSortEncad(&lista, vetor);
+                    }
                     break;
 
             case 6: pesquisaEncad(&lista);
@@ -808,12 +820,15 @@ void mainListaEncadeada(){
 
                     switch(opcSort){
                         case 1:selecSortEncad(&lista, vetor);
+                               ordem = 1;
                                break;
 
                         case 2:bubbleSortEncad(&lista, vetor);
+                               ordem = 1;
                                break;
 
                         case 3:insertionSortEncad(&lista, vetor);
+                               ordem = 1;
                                break;
 
                         case 4: numCopias=0; numItera=0;
@@ -860,6 +875,7 @@ void mainListaEncadeada(){
                                 temFuncao.tempo = difftime(temFuncao.temFinal, temFuncao.temIni);
                                 printf("\n Tempo da Funcao: %f segundos\n Numero Iteracoes:%d\n Numero Copias:%d", temFuncao.tempo, numItera, numCopias);
                                 printf("\n\n");
+                                ordem = 1;
                                 break;
 
                         case 5: numCopias=0; numItera=0;
@@ -906,6 +922,7 @@ void mainListaEncadeada(){
                                 temFuncao.tempo = difftime(temFuncao.temFinal, temFuncao.temIni);
                                 printf("\n Tempo da Funcao: %f segundos\n Numero Iteracoes:%d\n Numero Copias:%d", temFuncao.tempo, numItera, numCopias);
                                 printf("\n\n");
+                                ordem = 1;
                                 break;
 
                         case 6: numCopias=0; numItera=0;
@@ -952,6 +969,7 @@ void mainListaEncadeada(){
                                 temFuncao.tempo = difftime(temFuncao.temFinal, temFuncao.temIni);
                                 printf("\n Tempo da Funcao: %f segundos\n Numero Iteracoes:%d\n Numero Copias:%d", temFuncao.tempo, numItera, numCopias);
                                 printf("\n\n");
+                                ordem = 1;
                                 break;
                     }
                     break;
