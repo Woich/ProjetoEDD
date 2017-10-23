@@ -12,7 +12,6 @@ void selecSortEncad(ListaHeader *lista, ListaEncad **vetorPont){
     ContTempo temFuncao;//Função
     ListaEncad *pontAux;//Ponteiro auxiliar para troca de elementos
 
-    //pontAux = malloc(sizeof(ListaEncad));
     temFuncao.temIni = time(NULL);
     numCopias=0;
     numItera=0;
@@ -298,10 +297,6 @@ void mergeSortEncad(ListaHeader *lista, ListaEncad **vetorPont, long int iniComp
     //Pega o meio da lista para fazer a divisão mais tarde
     long int meio, i, j, k;//Controladores de tamanho
     ListaEncad **vetorTemp;
-
-    //Inicia vetor temporario
-    vetorTemp = malloc(sizeof(ListaEncad) * (fimComp-iniComp+1));
-
 
     if(iniComp == fimComp){
         numItera++;

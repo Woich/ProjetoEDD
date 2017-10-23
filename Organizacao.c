@@ -12,7 +12,6 @@ void selecSortSquencial(ListaHeader *lista, ListaPessoa **vetorPont){
     ContTempo temFuncao;//Função
     ListaPessoa *pontAux;//Ponteiro auxiliar para troca de elementos
 
-    //pontAux = malloc(sizeof(ListaEncad));
     temFuncao.temIni = time(NULL);
     numCopias=0;
     numItera=0;
@@ -44,44 +43,6 @@ void selecSortSquencial(ListaHeader *lista, ListaPessoa **vetorPont){
 
     }
 
-    //Esse for serve para arrumas todas as referencias de todos os pontos do vetor
-    for(i=0 ; i<lista->qtdElementos ; i++){
-        numItera++;
-        if(i == 0){
-            numItera++;
-            //Muda o primeiro elemento da lista
-            lista->primeiro = vetorPont[i];
-            numCopias++;
-
-            vetorPont[i]->anterior = 0;
-
-            vetorPont[i]->proximo = vetorPont[i+1];
-            numCopias++;
-        }
-        else if(i == lista->qtdElementos){
-            numItera++;
-            //Muda o ultimo elemento da lista
-            lista->ultimo = vetorPont[i];
-            numCopias++;
-
-            vetorPont[i]->proximo = 0;
-
-            vetorPont[i]->anterior = vetorPont[i-1];
-            numCopias++;
-        }
-        else{
-            numItera++;
-            //Altera os elemento do meio
-            vetorPont[i]->anterior = vetorPont[i-1];
-            numCopias++;
-
-            vetorPont[i]->proximo = vetorPont[i+1];
-            numCopias++;
-
-        }
-
-    }
-
     temFuncao.temFinal = time(NULL);
     temFuncao.tempo = difftime(temFuncao.temFinal, temFuncao.temIni);
     printf("\n Tempo da Funcao: %f segundos\n Numero Iteracoes:%d\n Numero Copias:%d", temFuncao.tempo, numItera, numCopias);
@@ -93,7 +54,7 @@ void selecSortSquencial(ListaHeader *lista, ListaPessoa **vetorPont){
 void bubbleSortSquencial(ListaHeader *lista, ListaPessoa **vetorPont){
 
     long int i, numAcoes = 1;// Controladores para o loops
-    ListaEncad *pontAux;//Ponteiro Auxiliar
+    ListaPessoa *pontAux;//Ponteiro Auxiliar
     ContTempo temFuncao;//Tempo da Função
 
     temFuncao.temIni = time(NULL);
@@ -126,43 +87,6 @@ void bubbleSortSquencial(ListaHeader *lista, ListaPessoa **vetorPont){
         }
     }
 
-    //Esse for serve para arrumas todas as referencias de todos os pontos do vetor
-    for(i=0 ; i<lista->qtdElementos ; i++){
-        numItera++;
-        if(i == 0){
-            numItera++;
-            //Muda o primeiro elemento da lista
-            lista->primeiro = vetorPont[i];
-            numCopias++;
-
-            vetorPont[i]->anterior = 0;
-
-            vetorPont[i]->proximo = vetorPont[i+1];
-            numCopias++;
-        }
-        else if(i == lista->qtdElementos){
-            numItera++;
-            //Muda o ultimo elemento da lista
-            lista->ultimo = vetorPont[i];
-            numCopias++;
-
-            vetorPont[i]->proximo = 0;
-
-            vetorPont[i]->anterior = vetorPont[i-1];
-            numCopias++;
-        }
-        else{
-            numItera++;
-            //Altera os elemento do meio
-            vetorPont[i]->anterior = vetorPont[i-1];
-            numCopias++;
-
-            vetorPont[i]->proximo = vetorPont[i+1];
-            numCopias++;
-
-        }
-    }
-
     temFuncao.temFinal = time(NULL);
     temFuncao.tempo = difftime(temFuncao.temFinal, temFuncao.temIni);
     printf("\n Tempo da Funcao: %f segundos\n Numero Iteracoes:%d\n Numero Copias:%d", temFuncao.tempo, numItera, numCopias);
@@ -173,7 +97,7 @@ void bubbleSortSquencial(ListaHeader *lista, ListaPessoa **vetorPont){
 void insertionSortSquencial(ListaHeader *lista, ListaPessoa **vetorPont){
     long int i, j;//Controladores de loops
     ContTempo temFuncao;//Tempo da Função
-    ListaEncad *pontAux;//Ponteiro Auxiliar
+    ListaPessoa *pontAux;//Ponteiro Auxiliar
 
     temFuncao.temIni = time(NULL);
     numCopias=0;
@@ -199,43 +123,6 @@ void insertionSortSquencial(ListaHeader *lista, ListaPessoa **vetorPont){
         }
     }
 
-    //Esse for serve para arrumas todas as referencias de todos os pontos do vetor
-    for(i=0 ; i<lista->qtdElementos ; i++){
-        numItera++;
-        if(i == 0){
-            numItera++;
-            //Muda o primeiro elemento da lista
-            lista->primeiro = vetorPont[i];
-            numCopias++;
-
-            vetorPont[i]->anterior = 0;
-
-            vetorPont[i]->proximo = vetorPont[i+1];
-            numCopias++;
-        }
-        else if(i == lista->qtdElementos){
-            numItera++;
-            //Muda o ultimo elemento da lista
-            lista->ultimo = vetorPont[i];
-            numCopias++;
-
-            vetorPont[i]->proximo = 0;
-
-            vetorPont[i]->anterior = vetorPont[i-1];
-            numCopias++;
-        }
-        else{
-            numItera++;
-            //Altera os elemento do meio
-            vetorPont[i]->anterior = vetorPont[i-1];
-            numCopias++;
-
-            vetorPont[i]->proximo = vetorPont[i+1];
-            numCopias++;
-
-        }
-    }
-
     temFuncao.temFinal = time(NULL);
     temFuncao.tempo = difftime(temFuncao.temFinal, temFuncao.temIni);
     printf("\n Tempo da Funcao: %f segundos\n Numero Iteracoes:%d\n Numero Copias:%d", temFuncao.tempo, numItera, numCopias);
@@ -244,7 +131,7 @@ void insertionSortSquencial(ListaHeader *lista, ListaPessoa **vetorPont){
 
 void quickSortSquencial(ListaHeader *lista, ListaPessoa **vetorPont, long int iniComp, long int fimComp){//Esse possui inicio e fim do vetor para limitadores
     long int i=iniComp, j=fimComp, pivo;//'i' e 'j' são controladores de loops, enquanto o pivo é uma medida para a organização
-    ListaEncad *pontAux;//Ponteiro Auxiliar
+    ListaPessoa *pontAux;//Ponteiro Auxiliar
     int meio;
 
     //Seleção do pivo
@@ -297,11 +184,7 @@ void quickSortSquencial(ListaHeader *lista, ListaPessoa **vetorPont, long int in
 void mergeSortSquencial(ListaHeader *lista, ListaPessoa **vetorPont, long int iniComp, long int fimComp){
     //Pega o meio da lista para fazer a divisão mais tarde
     long int meio, i, j, k;//Controladores de tamanho
-    ListaEncad **vetorTemp;
-
-    //Inicia vetor temporario
-    vetorTemp = malloc(sizeof(ListaEncad) * (fimComp-iniComp+1));
-
+    ListaPessoa **vetorTemp;
 
     if(iniComp == fimComp){
         numItera++;
@@ -318,7 +201,7 @@ void mergeSortSquencial(ListaHeader *lista, ListaPessoa **vetorPont, long int in
     k = 0;
 
     //Inicia vetor temporario
-    vetorTemp = malloc(sizeof(ListaEncad) * (fimComp-iniComp+1));
+    vetorTemp = malloc(sizeof(ListaPessoa) * (fimComp-iniComp+1));
 
     while(i <= meio && j <= fimComp){
 
@@ -370,7 +253,7 @@ void mergeSortSquencial(ListaHeader *lista, ListaPessoa **vetorPont, long int in
 void shellSortSquencial(ListaHeader *lista, ListaPessoa **vetorPont){
     long int i, j;//Controladores
     long int salto, tam;//tamanho do salto que deve ser dado, tamanho do vetor passado
-    ListaEncad *auxilar;
+    ListaPessoa *auxilar;
 
     //inicializa variaveis
     tam = lista->qtdElementos;
