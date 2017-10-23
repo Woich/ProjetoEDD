@@ -159,16 +159,20 @@ void addFinal(ListaPessoa **lisOper, int *fim){
 
     //Faz as cópias para registro
     strcpy(registro->nome, nomeAdd);
+    printf("%s\n", registro->nome);
     numCopias++;
     registro->rg = rgAdd;
+    printf("%d\n", registro->rg);
     numCopias++;
 
     //Realoca a memória necessária
     lisOper = realloc(lisOper, (*fim+1)*sizeof(ListaPessoa));
     //Add o elemento gerado em registro
     lisOper[*fim] = registro;
+    printf("%s,%d\n", lisOper[*fim]->nome, lisOper[*fim]->rg);
     //Adiciona mais um elemento no calculo
     *fim = *fim+1;
+    printf("%d\n", *fim);
 
     temFuncao.temFinal = time(NULL);
     temFuncao.tempo = difftime(temFuncao.temFinal, temFuncao.temIni);
