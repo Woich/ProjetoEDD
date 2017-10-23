@@ -129,7 +129,7 @@ void insertionSortSquencial(ListaHeader *lista, ListaPessoa **vetorPont){
     printf("\n\n");
 }
 
-void quickSortSquencial(ListaHeader *lista, ListaPessoa **vetorPont, long int iniComp, long int fimComp){//Esse possui inicio e fim do vetor para limitadores
+void quickSortSquencial(ListaPessoa **vetorPont, long int iniComp, long int fimComp){//Esse possui inicio e fim do vetor para limitadores
     long int i=iniComp, j=fimComp, pivo;//'i' e 'j' são controladores de loops, enquanto o pivo é uma medida para a organização
     ListaPessoa *pontAux;//Ponteiro Auxiliar
     int meio;
