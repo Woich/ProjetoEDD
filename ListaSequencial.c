@@ -7,6 +7,144 @@
 #include "Organizacao.h"
 #include "OrganizacaoEncad.h"
 
+void preencheListaSequencial(ListaHeader *listaGerada, ListaPessoa **vetorPonteiros, int opcArq){
+
+    ContTempo temFuncao;
+    FILE *file;
+    char linInicial[30],*linTemp, *strPart;
+    char delimit[]=" .,;:";
+    ListaPessoa *registro;
+    long int i, numRegistros;
+
+    temFuncao.temIni = time(NULL);
+    numCopias = 0;
+    numItera = 0;
+
+    switch(opcArq){
+        case 1: file = fopen("NomeRG10.txt", "r");
+                numRegistros = 10;
+                numItera++;
+                break;
+        case 2: file = fopen("NomeRG50.txt", "r");
+                numRegistros = 50;
+                numItera++;
+                break;
+        case 3: file = fopen("NomeRG100.txt", "r");
+                numRegistros = 100;
+                numItera++;
+                break;
+        case 4: file = fopen("NomeRG1K.txt", "r");
+                numRegistros = 1000;
+                numItera++;
+                break;
+        case 5: file = fopen("NomeRG10K.txt", "r");
+                numRegistros = 10000;
+                numItera++;
+                break;
+        case 6: file = fopen("NomeRG1M.txt", "r");
+                numRegistros = 1000000;
+                numItera++;
+                break;
+        case 7: file = fopen("NomeRG100M.txt", "r");
+                numRegistros = 11748444;
+                numItera++;
+                break;
+    }
+
+
+    //Le a primeira linha do arquivo
+    fgets(linInicial, 30, file);
+    numCopias++;
+
+    for(i=0; i<numRegistros ; i++){
+        numItera++;
+
+        if(listaGerada->qtdElementos == 0){
+            numItera++;
+
+            //Aloca Memoria
+            vetorPonteiros[0] = malloc(sizeof(ListaPessoa));
+            registro = malloc(sizeof(ListaPessoa));
+
+            //passa as infromações para registro
+            /*Atribui vetor a um ponteiro*/
+            linTemp = linInicial;
+            numCopias++;
+
+            /*Separa a String, pega o nome*/
+            strPart = strsep(&linTemp, delimit);
+            strcpy(registro->nome, strPart);
+            numCopias++;
+            printf("%s\n",registro->nome);
+
+            /*Separa a String, pega o rg*/
+            strPart = strsep(&linTemp, delimit);
+            registro->rg = atoi(strPart);
+            numCopias++;
+
+
+            //Arruma a lista
+            listaGerada->qtdElementos = listaGerada->qtdElementos+1;
+
+            listaGerada->primeiro = registro;
+            numCopias++;
+
+            listaGerada->ultimo = registro;
+            numCopias++;
+
+            //Adiciona no vetor de ponteiros;
+            vetorPonteiros[0] = registro;
+            numCopias++;
+        }
+        else{
+            numItera++;
+
+            //Aloca Memoria
+            vetorPonteiros[i] = malloc(sizeof(ListaPessoa));
+            registro = malloc(sizeof(ListaPessoa));
+
+            //passa as infromações para registro
+            /*Atribui vetor a um ponteiro*/
+            linTemp = linInicial;
+            numCopias++;
+
+            /*Separa a String, pega o nome*/
+            strPart = strsep(&linTemp, delimit);
+            strcpy(registro->nome, strPart);
+            numCopias++;
+
+            /*Separa a String, pega o rg*/
+            strPart = strsep(&linTemp, delimit);
+            registro->rg = atoi(strPart);
+            numCopias++;
+
+
+            //Arruma a lista
+            listaGerada->qtdElementos = listaGerada->qtdElementos+1;
+
+            listaGerada->ultimo = registro;
+            numCopias++;
+
+            //Adiciona no vetor de ponteiros;
+            vetorPonteiros[i] = registro;
+            numCopias++;
+        }
+
+        linInicial[0] = '\0';
+        fgets(linInicial, 30, file);
+
+    }
+
+
+    fclose(file);
+    temFuncao.temFinal = time(NULL);
+    temFuncao.tempo = difftime(temFuncao.temFinal, temFuncao.temIni);
+    printf("\n Tempo da Funcao: %f segundos\n Numero Iteracoes:%d\n Numero Copias:%d", temFuncao.tempo, numItera, numCopias);
+    printf("\n\n");
+
+
+}
+
 void addFinal(ListaPessoa *lisOper, int fim){
     numCopias++;/*Contador somado para cada cópia feita na função*/
 
@@ -135,8 +273,9 @@ void removeItem(ListaPessoa *lisOper, int fim){
 
 }
 
-void imprimeLista(ListaPessoa *pessoas, int tamList){
-    numCopias++;/*Contador somado para cada cópia feita na função*/
+void imprimeLista(ListaPessoa **pessoas, int tamList){
+    numCopias = 0;
+    numItera = 0;
 
     int j, numItem;
     ContTempo temFuncao;
@@ -149,13 +288,14 @@ void imprimeLista(ListaPessoa *pessoas, int tamList){
     for(j=0 ; j<tamList ; j++){
         numItera++;
         numItem = j+1;
-        printf("%i : %s , %i", numItem, pessoas[j].nome, pessoas[j].rg);
+        printf("%i : %s , %i", numItem, pessoas[j]->nome, pessoas[j]->rg);
         printf("\n");
     }
 
     temFuncao.temFinal = time(NULL);
     temFuncao.tempo = difftime(temFuncao.temFinal, temFuncao.temIni);
-    printf("\n Tempo da Funcao: %f segundos\n\n", temFuncao.tempo);
+    printf("\n Tempo da Funcao: %f segundos\n Numero Iteracoes:%d\n Numero Copias:%d", temFuncao.tempo, numItera, numCopias);
+    printf("\n\n");
 }
 
 void procuraRG(ListaPessoa *pessoas, int tamList){
@@ -220,16 +360,12 @@ void salvaLista(ListaPessoa *pessoas, int arquivo, int tamList){
 void mainSequencial(){
 
     int opcArq=0, opcFun=0, j, numEle=0;
+    ListaPessoa **listaSequencial;
+    ListaHeader listaSeq;
 
-    char *split, *linTemp, linIni[30];
-
-    const char delimit[]=" .,;:";
-
-    FILE *file = fopen("NomeRG1M.txt", "r");
-
-    unsigned long int i=0;
-
-    ListaPessoa *lista;
+    listaSeq.primeiro=0;
+    listaSeq.ultimo=0;
+    listaSeq.qtdElementos=0;
 
     printf("Qual arquivo deve ser lido?\n"
            "(1)10 registros\n"
@@ -242,63 +378,23 @@ void mainSequencial(){
     scanf("%d", &opcArq);
 
     switch(opcArq){
-        case 1: file = fopen("NomeRG10.txt", "r");
-                lista =malloc(10 * sizeof(lista));
+        case 1: listaSequencial =malloc(10 * sizeof(ListaPessoa));
                 break;
-        case 2: file = fopen("NomeRG50.txt", "r");
-                lista =malloc(50 * sizeof(lista));
+        case 2: listaSequencial =malloc(50 * sizeof(ListaPessoa));
                 break;
-        case 3: file = fopen("NomeRG100.txt", "r");
-                lista =malloc(100 * sizeof(lista));
+        case 3: listaSequencial =malloc(100 * sizeof(ListaPessoa));
                 break;
-        case 4: file = fopen("NomeRG1K.txt", "r");
-                lista =malloc(1000 * sizeof(lista));
+        case 4: listaSequencial =malloc(1000 * sizeof(ListaPessoa));
                 break;
-        case 5: file = fopen("NomeRG10K.txt", "r");
-                lista =malloc(10000 * sizeof(lista));
+        case 5: listaSequencial =malloc(10000 * sizeof(ListaPessoa));
                 break;
-        case 6: file = fopen("NomeRG1M.txt", "r");
-                lista =malloc(1000000 * sizeof(lista));
+        case 6: listaSequencial =malloc(1000000 * sizeof(ListaPessoa));
                 break;
-        case 7: file = fopen("NomeRG100M.txt", "r");
-                lista =malloc(11748444 * sizeof(lista));
+        case 7: listaSequencial =malloc(11748444 * sizeof(ListaPessoa));
                 break;
     }
 
-    fgets(linIni, 30, file);
-    numCopias++;
-
-    /*Copia a lista inteira enquanto não chegar o caracter de fim('\0')*/
-     while(linIni[0] != '\0'){
-            numItera++;
-
-            numEle++;
-
-            linTemp = linIni;
-            numCopias++;
-
-            split = strsep(&linTemp, delimit);
-            numCopias++;
-
-            for(j=0 ; j<30 ; j++){
-                numItera++;
-                lista[i].nome[j]=split[j];
-                numCopias++;
-            }
-
-            split = strsep(&linTemp, delimit);
-            numCopias++;
-
-            lista[i].rg = atoi( split );
-            numCopias++;
-
-            linIni[0] = '\0';
-            i++;
-            fgets(linIni, 30, file);
-            numCopias++;
-    }
-
-    fclose(file);
+    preencheListaSequencial(&listaSeq,listaSequencial, opcArq);
 
     /*Menu de opções*/
     while(opcFun != -1){
@@ -318,36 +414,36 @@ void mainSequencial(){
         getchar();
 
         switch(opcFun){
-            case 1: imprimeLista(lista, numEle);
+            case 1: imprimeLista(listaSequencial, listaSeq.qtdElementos);
                     numItera++;
                     printf("\n\n");
                     break;
 
-            case 2: addFinal(lista, numEle);
+            case 2: addFinal(listaSequencial, numEle);
                     numItera++;
                     numEle++;
                     break;
 
-            case 3: addMeio(lista, numEle);
+            case 3: addMeio(listaSequencial, numEle);
                     numItera++;
                     numEle++;
                     break;
 
-            case 4: addIni(lista, numEle);
+            case 4: addIni(listaSequencial, numEle);
                     numItera++;
                     numEle++;
                     break;
 
-            case 5: removeItem(lista, numEle);
+            case 5: removeItem(listaSequencial, numEle);
                     numItera++;
                     numEle--;
                     break;
 
-            case 6: procuraRG(lista, numEle);
+            case 6: procuraRG(listaSequencial, numEle);
                     numItera++;
                     break;
 
-            case 7: salvaLista(lista, opcArq, numEle);
+            case 7: salvaLista(listaSequencial, opcArq, numEle);
                     numItera++;
                     break;
 
