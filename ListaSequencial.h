@@ -7,11 +7,11 @@ typedef struct listapessoa{
 }ListaPessoa;
 
 
-void addFinal(ListaPessoa **lisOper, int *fim);
-void addMeio(ListaPessoa *lisOper, int fim);
-void addIni(ListaPessoa *lisOper, int fim);
-void removeItem(ListaPessoa *lisOper, int fim);
-void imprimeLista(ListaPessoa **pessoas, int tamList);
+ListaPessoa** addFinal(ListaPessoa **lisOper, int fim);
+ListaPessoa** addMeio(ListaPessoa **lisOperMeio, int fimMeio);
+ListaPessoa** addIni(ListaPessoa **lisOperIni, int fimIni);
+ListaPessoa** removeItem(ListaPessoa **lisOperRemove, int fimRemove);
+void imprimeLista(long int fim, ListaPessoa **vetorPonteiros);
 void procuraRG(ListaPessoa *pessoas, int tamList);
 void salvaLista(ListaPessoa *pessoas, int arquivo, int tamList);
 void mainSequencial();

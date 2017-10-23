@@ -136,17 +136,28 @@ void preencheListaSequencial(int *numEle, ListaPessoa **vetorPonteiros, int opcA
 
 }
 
-void addFinal(ListaPessoa **lisOper, int *fim){
+ListaPessoa** addFinal(ListaPessoa **lisOper, int fim){
     numCopias = 0;
     numItera = 0;
 
     ContTempo temFuncao;
-    int rgAdd;
+    int rgAdd, i;
     char nomeAdd[30];
 
-    ListaPessoa *registro = malloc(sizeof(ListaPessoa));
+    ListaPessoa *registro, **vetorAux;
+
+    //gera o vetor auxiliar que será passado de volta como retorno
+    vetorAux = malloc((fim+1) * sizeof(ListaPessoa));
+
+    registro = malloc(sizeof(ListaPessoa));
 
     temFuncao.temIni = time(NULL);
+
+    for(i=0 ; i<fim ; i++){
+        vetorAux[i] = lisOper[i];
+        numItera++;
+        numCopias++;
+    }
 
     /*Pega o nome a tribui ao elemento do Vetor*/
     printf("Digite o nome:\n");
@@ -165,28 +176,31 @@ void addFinal(ListaPessoa **lisOper, int *fim){
     printf("%d\n", registro->rg);
     numCopias++;
 
-    //Realoca a memória necessária
-    lisOper = realloc(lisOper, (*fim+1)*sizeof(ListaPessoa));
     //Add o elemento gerado em registro
-    lisOper[*fim] = registro;
-    printf("%s,%d\n", lisOper[*fim]->nome, lisOper[*fim]->rg);
-    //Adiciona mais um elemento no calculo
-    *fim = *fim+1;
-    printf("%d\n", *fim);
+    vetorAux[fim] = registro;
+    numCopias++;
 
     temFuncao.temFinal = time(NULL);
     temFuncao.tempo = difftime(temFuncao.temFinal, temFuncao.temIni);
     printf("\n Tempo da Funcao: %f segundos\n Numero Iteracoes:%d\n Numero Copias:%d", temFuncao.tempo, numItera, numCopias);
     printf("\n\n");
 
+    free(lisOper);
+    return vetorAux;
+
 }
 
-void addMeio(ListaPessoa *lisOper, int fim){
+ListaPessoa** addMeio(ListaPessoa **lisOperMeio, int fimMeio){
     numCopias++;/*Contador somado para cada cópia feita na função*/
 
-    int posiNovo, cont;
+    int posiNovo, cont, rgNovo;
     char nomeNovo[30];
+    ListaPessoa *registro, **vetorAux;
     ContTempo temFuncao;
+
+    //Aloca memória necessária para a efetuação a adição;
+    registro = malloc(sizeof(ListaPessoa));
+    vetorAux = malloc((fimMeio+1)*sizeof(ListaPessoa));
 
     temFuncao.temIni = time(NULL);
 
@@ -194,35 +208,56 @@ void addMeio(ListaPessoa *lisOper, int fim){
     printf("Qual a posicao?\n");
     scanf("%i",&posiNovo);
 
-    /*Corre a lista para chgar ao elemento correto. Vai descendo a lista em uma linha no meio da lista*/
-    for(cont=fim+1; cont> posiNovo-1 ; cont--){
-        numItera++;
-
-        strcpy(lisOper[cont].nome, lisOper[cont-1].nome);
-        numCopias++;
-
-        /*Copia o RG anterior*/
-        lisOper[cont].rg = lisOper[cont-1].rg;
-        numCopias++;
-    }
-
     /*Pega o nome a tribui ao elemento do Vetor*/
     printf("Digite o nome:\n");
     scanf("%s", nomeNovo);
-    strcpy(lisOper[posiNovo-1].nome, nomeNovo);
 
     /*Pega o rg a tribui ao elemento do Vetor*/
     printf("Digite o RG:\n");
-    scanf("%i", &lisOper[posiNovo-1].rg);
+    scanf("%i", &rgNovo);
     getchar();
+
+    strcpy(registro->nome, nomeNovo);
+    numCopias++;
+
+    registro->rg = rgNovo;
+    numCopias++;
+
+    for(cont=0; cont<=fimMeio ; cont++){
+
+        numItera++;
+
+        if(cont < posiNovo-1){
+            vetorAux[cont]=lisOperMeio[cont];
+            printf("%s,%d\n", vetorAux[cont]->nome, vetorAux[cont]->rg);
+            numItera++;
+            numCopias++;
+        }
+        else if(cont == posiNovo-1){
+            vetorAux[cont] = registro;
+            printf("%s,%d\n", vetorAux[cont]->nome, vetorAux[cont]->rg);
+            numItera++;
+            numCopias++;
+        }
+        else{
+            vetorAux[cont]=lisOperMeio[cont-1];
+            printf("%s,%d\n", vetorAux[cont]->nome, vetorAux[cont]->rg);
+            numItera++;
+            numCopias++;
+        }
+    }
 
     temFuncao.temFinal = time(NULL);
     temFuncao.tempo = difftime(temFuncao.temFinal, temFuncao.temIni);
-    printf("\n Tempo da Funcao: %f segundos\n\n", temFuncao.tempo);
+    printf("\n Tempo da Funcao: %f segundos\n Numero Iteracoes:%d\n Numero Copias:%d", temFuncao.tempo, numItera, numCopias);
+    printf("\n\n");
+
+    free(lisOperMeio);
+    return vetorAux;
 
 }
 
-void addIni(ListaPessoa *lisOper, int fim){
+ListaPessoa** addIni(ListaPessoa **lisOperIni, int fimIni){
     numCopias++;/*Contador somado para cada cópia feita na função*/
 
     int  cont;
@@ -231,26 +266,13 @@ void addIni(ListaPessoa *lisOper, int fim){
 
     temFuncao.temIni = time(NULL);
 
-    /*Corre vetor até o inicio, Vai copiando os valores para descer a lista inteira em uma linha*/
-    for(cont=fim+1; cont> 0 ; cont--){
-        numItera++;
-
-        strcpy(lisOper[cont].nome, lisOper[cont-1].nome);
-        numCopias++;
-
-        lisOper[cont].rg = lisOper[cont-1].rg;
-        numCopias++;
-    }
-
     /*Pega o nome a tribui ao elemento do Vetor*/
     printf("Digite o nome:\n");
     scanf("%s", nomeNovo);
-    strcpy(lisOper[0].nome, nomeNovo);
     numCopias++;
 
     /*Pega o rg a tribui ao elemento do Vetor*/
     printf("Digite o RG:\n");
-    scanf("%i", &lisOper[0].rg);
     getchar();
 
     temFuncao.temFinal = time(NULL);
@@ -258,7 +280,7 @@ void addIni(ListaPessoa *lisOper, int fim){
     printf("\n Tempo da Funcao: %f segundos\n\n", temFuncao.tempo);
 }
 
-void removeItem(ListaPessoa *lisOper, int fim){
+ListaPessoa** removeItem(ListaPessoa **lisOperRemove, int fimRemove){
     numCopias++;/*Contador somado para cada cópia feita na função*/
 
     int posiRem, cont;
@@ -270,16 +292,6 @@ void removeItem(ListaPessoa *lisOper, int fim){
     printf("Qual a posicao?\n");
     scanf("%d",&posiRem);
 
-    /*Corre vetor até achar o elemento que será removido e sobe a lista inteira após a posição*/
-    for(cont=fim-1 ; cont>posiRem-1 ; cont--){
-        numItera++;
-        strcpy(lisOper[cont-1].nome, lisOper[cont].nome);
-        numCopias++;
-
-        lisOper[cont-1].rg = lisOper[cont].rg;
-        numCopias++;
-    }
-
     temFuncao.temFinal = time(NULL);
     temFuncao.tempo = difftime(temFuncao.temFinal, temFuncao.temIni);
     printf("\n Tempo da Funcao: %f segundos\n\n", temFuncao.tempo);
@@ -287,29 +299,27 @@ void removeItem(ListaPessoa *lisOper, int fim){
 
 }
 
-void imprimeLista(ListaPessoa **pessoas, int tamList){
-    numCopias = 0;
-    numItera = 0;
+void imprimeLista(long int fim, ListaPessoa **vetorPonteiros){
 
-    int j, numItem;
     ContTempo temFuncao;
 
     temFuncao.temIni = time(NULL);
+    /*Contador para impressão*/
+    long int i;
 
-    printf("\n\n");
+    ListaPessoa *registro = malloc(sizeof(ListaPessoa));
 
-    /*Roda lista e imprime o valor dela*/
-    for(j=0 ; j<tamList ; j++){
-        numItera++;
-        numItem = j+1;
-        printf("%i : %s , %i", numItem, pessoas[j]->nome, pessoas[j]->rg);
-        printf("\n");
+    for(i=0 ; i<fim ; i++){
+        //Imprime registro em questão
+        registro = vetorPonteiros[i];
+        printf("%d: %s,%d \n", i+1, registro->nome, registro->rg);
     }
 
     temFuncao.temFinal = time(NULL);
     temFuncao.tempo = difftime(temFuncao.temFinal, temFuncao.temIni);
     printf("\n Tempo da Funcao: %f segundos\n Numero Iteracoes:%d\n Numero Copias:%d", temFuncao.tempo, numItera, numCopias);
     printf("\n\n");
+
 }
 
 void procuraRG(ListaPessoa *pessoas, int tamList){
@@ -423,26 +433,27 @@ void mainSequencial(){
         getchar();
 
         switch(opcFun){
-            case 1: imprimeLista(listaSequencial, numEle);
+            case 1: imprimeLista(numEle, listaSequencial);
                     numItera++;
                     printf("\n\n");
                     break;
 
-            case 2: addFinal(listaSequencial, &numEle);
+            case 2: listaSequencial = addFinal(listaSequencial, numEle);
+                    numEle++;
                     numItera++;
                     break;
 
-            case 3: addMeio(listaSequencial, numEle);
+            case 3: listaSequencial = addMeio(listaSequencial, numEle);
                     numItera++;
                     numEle++;
                     break;
 
-            case 4: addIni(listaSequencial, numEle);
+            case 4: listaSequencial = addIni(listaSequencial, numEle);
                     numItera++;
                     numEle++;
                     break;
 
-            case 5: removeItem(listaSequencial, numEle);
+            case 5: listaSequencial = removeItem(listaSequencial, numEle);
                     numItera++;
                     numEle--;
                     break;
