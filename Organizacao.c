@@ -223,7 +223,6 @@ void mergeSortSquencial(ListaPessoa **vetorPont, long int iniComp, long int fimC
             }
 
             else{
-            printf("i:%d, j:%d", vetorPont[i]->rg, vetorPont[j]->rg);
                 if(vetorPont[i]->rg < vetorPont[j]->rg){
                     vetorTemp[k] = vetorPont[i];
                     i++;
