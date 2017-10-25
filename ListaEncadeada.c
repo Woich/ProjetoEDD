@@ -169,19 +169,19 @@ void imprimeEncad(ListaHeader *lista, ListaEncad **vetorPonteiros){
 
     imprimir = lista->primeiro;
 
-    /*for(i=0 ; i<lista->qtdElementos ; i++){
+    for(i=0 ; i<lista->qtdElementos ; i++){
         numItera++;
 
         //Imprime registro em questão
         printf("%d: %s,%d \n", i+1, imprimir->nome, imprimir->rg);
         //Altera o registro para o próximo
         imprimir = imprimir->proximo;
-    }*/
+    }
 
-    for(i=0 ; i<lista->qtdElementos ; i++){
+    /*for(i=0 ; i<lista->qtdElementos ; i++){
         //Imprime registro em questão
         printf("%d: %s,%d \n", i+1, vetorPonteiros[i]->nome, vetorPonteiros[i]->rg);
-    }
+    }*/
 
     temFuncao.temFinal = time(NULL);
     temFuncao.tempo = difftime(temFuncao.temFinal, temFuncao.temIni);
