@@ -590,7 +590,7 @@ void mainSequencial(){
                         case 6: numCopias=0; numItera=0;
                                 temFuncao.temIni = time(NULL);
 
-                                shellSortEncad(numEle, listaSequencial);
+                                shellSortSquencial(numEle, listaSequencial);
 
                                 temFuncao.temFinal = time(NULL);
                                 temFuncao.tempo = difftime(temFuncao.temFinal, temFuncao.temIni);

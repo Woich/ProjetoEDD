@@ -206,40 +206,45 @@ void mergeSortSquencial(ListaPessoa **vetorPont, long int iniComp, long int fimC
     while(i <= meio && j <= fimComp){
 
 
-        if(vetorPont[i]->rg < vetorPont[j]->rg){
-            vetorTemp[k] = vetorPont[i];
-            i++;
-            k++;
-            numCopias++;
-            numItera++;
-        }
-        else{
+        if(i == meio+1){
             vetorTemp[k] = vetorPont[j];
             j++;
             k++;
             numCopias++;
             numItera++;
         }
+        else{
+            if(j == fimComp+1){
+                vetorTemp[k] = vetorPont[i];
+                i++;
+                k++;
+                numCopias++;
+                numItera++;
+            }
+
+            else{
+            printf("i:%d, j:%d", vetorPont[i]->rg, vetorPont[j]->rg);
+                if(vetorPont[i]->rg < vetorPont[j]->rg){
+                    vetorTemp[k] = vetorPont[i];
+                    i++;
+                    k++;
+                    numCopias++;
+                    numItera++;
+                }
+                else{
+                    vetorTemp[k] = vetorPont[j];
+                    j++;
+                    k++;
+                    numCopias++;
+                    numItera++;
+                }
+            }
+        }
 
         numItera = numItera+2;
 
     }
 
-    while(i<= meio){
-        vetorTemp[k] = vetorPont[i];
-        i++;
-        k++;
-        numCopias++;
-        numItera++;
-    }
-
-    while(j<= fimComp){
-        vetorTemp[k] = vetorPont[j];
-        j++;
-        k++;
-        numCopias++;
-        numItera++;
-    }
     k=0;
     for(i=iniComp ; i<=fimComp ; i++){
         vetorPont[i]=vetorTemp[k];
