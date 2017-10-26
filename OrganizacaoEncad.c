@@ -20,10 +20,10 @@ void selecSortEncad(ListaHeader *lista, ListaEncad **vetorPont){
 
         numItera++;
 
-        for(j=0 ; j<lista->qtdElementos ; j++){
+        for(j=i+1 ; j<lista->qtdElementos ; j++){
             numItera++;
 
-            if(vetorPont[j]->rg > vetorPont[i]->rg){
+            if(vetorPont[j]->rg < vetorPont[i]->rg){
                 numItera++;
 
                 //Atribui valor para o auxiliar

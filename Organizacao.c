@@ -20,10 +20,10 @@ void selecSortSquencial(int elementos, ListaPessoa **vetorPont){
 
         numItera++;
 
-        for(j=0 ; j<elementos ; j++){
+        for(j=i+1 ; j<elementos ; j++){
             numItera++;
 
-            if(vetorPont[j]->rg > vetorPont[i]->rg){
+            if(vetorPont[j]->rg < vetorPont[i]->rg){
                 numItera++;
 
                 //Atribui valor para o auxiliar
