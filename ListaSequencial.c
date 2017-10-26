@@ -373,7 +373,7 @@ void imprimeLista(long int fim, ListaPessoa **vetorPonteiros){
 
 }
 
-void procuraRG(ListaPessoa *pessoas, int tamList){
+void procuraRG(ListaPessoa **pessoas, int tamList){
     numCopias++;/*Contador somado para cada cópia feita na função*/
 
     int j, numItem, cont=0;
@@ -390,12 +390,12 @@ void procuraRG(ListaPessoa *pessoas, int tamList){
         numItera++;
 
         /*Caso seja igual ele imprime*/
-        if(pessoas[j].rg == numItem){
+        if(pessoas[j]->rg == numItem){
             numItera++;
             cont++;
             printf("\n\nPosicao:%i\n"
                    "Nome:%s\n"
-                   "RG:%i\n\n", j+1, pessoas[j].nome, pessoas[j].rg);
+                   "RG:%i\n\n", j+1, pessoas[j]->nome, pessoas[j]->rg);
         }
     }
 
@@ -410,7 +410,7 @@ void procuraRG(ListaPessoa *pessoas, int tamList){
     printf("\n Tempo da Funcao: %f segundos\n\n", temFuncao.tempo);
 }
 
-void salvaLista(ListaPessoa *pessoas, int arquivo, int tamList){
+void salvaLista(ListaPessoa **pessoas, int arquivo, int tamList){
     numCopias++;/*Contador somado para cada cópia feita na função*/
     numCopias++;
 
@@ -423,7 +423,7 @@ void salvaLista(ListaPessoa *pessoas, int arquivo, int tamList){
     /*Corre lista e imprime no arquivo*/
     for(j=0 ; j<tamList ; j++){
         numItera++;
-        fprintf(file,"%s,%i\n", pessoas[j].nome, pessoas[j].rg);
+        fprintf(file,"%s,%i\n", pessoas[j]->nome, pessoas[j]->rg);
     }
 
     printf("Salvo com sucesso");
