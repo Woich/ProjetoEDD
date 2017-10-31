@@ -29,7 +29,7 @@ ListaEncad** addFinalEncad(ListaEncad **lisOper, ListaHeader *listaFim);
 ListaEncad** addMeioEncad(ListaEncad **lisOperMeio, ListaHeader *listaMeio);
 ListaEncad** addInicioEncad(ListaEncad **lisOperIni, ListaHeader *listaIni);
 ListaEncad** removeEncad(ListaEncad **lisOperRemove, ListaHeader *listaRemove);
-void pesquisaEncad(ListaHeader *lista);
+void pesquisaEncad(ListaHeader *lista, ListaEncad **vetorAva);
 void salvaEncad(ListaHeader *lista);
 void mainListaEncadeada();
 

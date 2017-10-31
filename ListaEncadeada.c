@@ -405,7 +405,7 @@ ListaEncad** removeEncad(ListaEncad **lisOperRemove, ListaHeader *listaRemove){
     return vetorAux;
 }
 
-void pesquisaEncad(ListaHeader *lista){
+void pesquisaEncad(ListaHeader *lista, ListaEncad **vetorAva){
 
     int posicao, i, rg, opcBusca=3;
 
@@ -462,16 +462,12 @@ void pesquisaEncad(ListaHeader *lista){
             scanf("%d", &rg);
             getchar();
 
-            for(i=1 ; i<=lista->qtdElementos; i++){
+            int achou = 0;
+
+            for(i=0 ; i<lista->qtdElementos; i++){
                 numItera++;
 
-                if(lista->ultimo->rg == registro->rg && registro->rg != rg){
-                    numItera++;
-                    printf("\nO RG(%d) nao foi cadastrado\n\n", rg);
-                    break;
-                }
-
-                if(registro->rg == rg){
+                if(vetorAva[i]->rg == rg){
                     numItera++;
 
                     printf("\nPosicao:%i\n"
@@ -479,18 +475,18 @@ void pesquisaEncad(ListaHeader *lista){
                            "RG:%i\n", i, registro->nome, registro->rg);
 
                     /*Altera o valor para quebrar o loop while*/
-                    opcBusca = 0;
+                    achou = 1;
 
                     /*Caso seja igual, sai do loop for*/
                     break;
                 }
-                else{
-                    numItera++;
-                    /*Continua correndo o vetor até o rg ser igual*/
-                    registro = registro->proximo;
-                    numCopias++;
-                }
             }
+
+            if(achou != 1){
+                printf("Rg nao cadastrado");
+            }
+
+            opcBusca = 0;
         }
 
     }
@@ -788,7 +784,7 @@ void mainListaEncadeada(){
                     }
                     break;
 
-            case 6: pesquisaEncad(&lista);
+            case 6: pesquisaEncad(&lista, vetor);
                     numItera++;
                     break;
 

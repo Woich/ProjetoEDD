@@ -426,24 +426,30 @@ void pesquisaBinariaEncad(ListaHeader *lista, ListaEncad **vetorPont){
 
     while(inicio <= fim){
         posicao = (fim + inicio)/2;
+            numItera++;
         //caso ache pare o loop
         if(vetorPont[posicao]->rg == rgBuscado){
+            numItera++;
             break;
         }
 
         if(vetorPont[posicao]->rg > rgBuscado){
+            numItera++;
             fim = posicao-1;
         }
         else{
+            numItera++;
             inicio = posicao+1;
         }
     }
 
     if(inicio>fim){
+        numItera++;
         printf("\n\n----RG nao encontrado----\n");
     }
     else{
-        printf("\n\nPosicao:%d \nRG:%d \nNome:%s", posicao+1, vetorPont[posicao]->rg, vetorPont[posicao]->nome);
+        numItera++;
+        printf("\n\nPosicao:%d \nRG:%d \nNome:%s\n\n", posicao, vetorPont[posicao]->rg, vetorPont[posicao]->nome);
     }
 
 }
